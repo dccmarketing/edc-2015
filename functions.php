@@ -4,7 +4,7 @@
  *
  * @link https://codex.wordpress.org/Functions_File_Explained
  *
- * @package DocBlock
+ * @package EDC 2015
  */
 
 if ( ! function_exists( 'edc_2015_setup' ) ) :

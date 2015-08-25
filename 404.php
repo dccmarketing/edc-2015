@@ -4,7 +4,7 @@
  *
  * @link https://codex.wordpress.org/Creating_an_Error_404_Pagex
  *
- * @package DocBlock
+ * @package EDC 2015
  */
 
 get_header();

@@ -4,7 +4,7 @@
  *
  * @link https://jetpack.me/
  *
- * @package DocBlock
+ * @package EDC 2015
  */
 
 /**

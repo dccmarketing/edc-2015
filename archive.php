@@ -4,7 +4,7 @@
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
- * @package DocBlock
+ * @package EDC 2015
  */
 
 get_header(); ?>

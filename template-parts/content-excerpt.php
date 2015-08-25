@@ -4,7 +4,7 @@
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
- * @package DocBlock
+ * @package EDC 2015
  */
 
 ?><article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>

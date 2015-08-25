@@ -4,7 +4,7 @@
  *
  * Eventually, some of the functionality here could be replaced by core features.
  *
- * @package DocBlock
+ * @package EDC 2015
  */
 
 if ( ! function_exists( 'edc_2015_posted_on' ) ) :
