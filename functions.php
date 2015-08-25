@@ -1,6 +1,6 @@
 <?php
 /**
- * Replace With Theme Name functions and definitions
+ * EDC 2015 functions and definitions
  *
  * @link https://codex.wordpress.org/Functions_File_Explained
  *

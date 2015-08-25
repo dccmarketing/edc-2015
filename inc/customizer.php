@@ -11,7 +11,7 @@
  */
 
 /**
- * Replace With Theme Name Theme Customizer
+ * EDC 2015 Theme Customizer
  *
  * Contains methods for customizing the theme customization screen.
  *
@@ -50,7 +50,7 @@ class edc_2015_Customize {
 		$wp_customize->add_panel( 'theme_options',
 			array(
 				'capability'  		=> 'edit_theme_options',
-				'description'  		=> esc_html__( 'Options for Replace With Theme Name', 'edc-2015' ),
+				'description'  		=> esc_html__( 'Options for EDC 2015', 'edc-2015' ),
 				'priority'  		=> 10,
 				'theme_supports'  	=> '',
 				'title'  			=> esc_html__( 'Theme Options', 'edc-2015' ),
