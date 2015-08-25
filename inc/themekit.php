@@ -6,7 +6,7 @@
  * @package DocBlock
  * @author Slushman <chris@slushman.com>
  */
-class function_names_Themekit {
+class edc_2015_Themekit {
 
 	/**
 	 * Constructor
@@ -38,7 +38,7 @@ class function_names_Themekit {
 		add_filter( 'excerpt_length', array( $this, 'excerpt_length' ) );
 		add_filter( 'excerpt_more', array( $this, 'excerpt_read_more' ) );
 		add_filter( 'mce_buttons_2', array( $this, 'add_editor_buttons' ) );
-		add_action( 'function_names_breadcrumbs', array( $this, 'breadcrumbs' ) );
+		add_action( 'edc_2015_breadcrumbs', array( $this, 'breadcrumbs' ) );
 
 	} // loader()
 
@@ -602,7 +602,7 @@ class function_names_Themekit {
 /**
  * Make an instance so its ready to be used
  */
-$function_names_themekit = new function_names_Themekit();
+$edc_2015_themekit = new edc_2015_Themekit();
 
 /**
  * Prints whatever in a nice, readable format

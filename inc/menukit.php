@@ -6,7 +6,7 @@
  * @package DocBlock
  * @author Slushman <chris@slushman.com>
  */
-class function_names_Menukit {
+class edc_2015_Menukit {
 
 	/**
 	 * Constructor
@@ -225,13 +225,13 @@ class function_names_Menukit {
 	 */
 	public function get_svg_by_class( $classes ) {
 
-		global $function_names_themekit;
+		global $edc_2015_themekit;
 
 		$output = '';
 
 		foreach ( $classes as $class ) {
 
-			$check = $function_names_themekit->get_svg( $class );
+			$check = $edc_2015_themekit->get_svg( $class );
 
 			if ( ! is_null( $check ) ) { $output .= $check; break; }
 
@@ -294,5 +294,5 @@ class function_names_Menukit {
 /**
  * Make an instance so its ready to be used
  */
-$function_names_menukit = new function_names_Menukit();
+$edc_2015_menukit = new edc_2015_Menukit();
 

@@ -13,20 +13,20 @@
  *
  * @uses 	add_theme_support()
  */
-function function_names_jetpack_setup() {
+function edc_2015_jetpack_setup() {
 
 	add_theme_support( 'infinite-scroll', array(
 		'container' => 'main',
 		'footer'    => 'page',
 	) );
 
-} // function_names_jetpack_setup()
-add_action( 'after_setup_theme', 'function_names_jetpack_setup' );
+} // edc_2015_jetpack_setup()
+add_action( 'after_setup_theme', 'edc_2015_jetpack_setup' );
 
 /**
  * Custom render function for Infinite Scroll.
  */
-function function_names__infinite_scroll_render() {
+function edc_2015__infinite_scroll_render() {
 
 	while ( have_posts() ) {
 
@@ -35,4 +35,4 @@ function function_names__infinite_scroll_render() {
 
 	}
 
-} // function_names__infinite_scroll_render
+} // edc_2015__infinite_scroll_render

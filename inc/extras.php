@@ -13,7 +13,7 @@
  * @param 	array 		$classes 		Classes for the body element.
  * @return 	array 						The modified body class array
  */
-function function_names_body_classes( $classes ) {
+function edc_2015_body_classes( $classes ) {
 
 	// Adds a class of group-blog to blogs with more than 1 published author.
 	if ( is_multi_author() ) {
@@ -24,5 +24,5 @@ function function_names_body_classes( $classes ) {
 
 	return $classes;
 
-} // function_names_body_classes()
-add_filter( 'body_class', 'function_names_body_classes' );
+} // edc_2015_body_classes()
+add_filter( 'body_class', 'edc_2015_body_classes' );

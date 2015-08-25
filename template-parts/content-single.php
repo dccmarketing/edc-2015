@@ -14,7 +14,7 @@
 
 		?><div class="entry-meta"><?php
 
-			function_names_posted_on();
+			edc_2015_posted_on();
 
 		?></div><!-- .entry-meta -->
 	</header><!-- .entry-header -->
@@ -32,7 +32,7 @@
 
 	<footer class="entry-footer"><?php
 
-		function_names_entry_footer();
+		edc_2015_entry_footer();
 
 	?></footer><!-- .entry-footer -->
 </article><!-- #post-## -->
