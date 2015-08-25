@@ -50,10 +50,10 @@ class function_names_Customize {
 		$wp_customize->add_panel( 'theme_options',
 			array(
 				'capability'  		=> 'edit_theme_options',
-				'description'  		=> esc_html__( 'Options for Replace With Theme Name', 'text-domain' ),
+				'description'  		=> esc_html__( 'Options for Replace With Theme Name', 'edc-2015' ),
 				'priority'  		=> 10,
 				'theme_supports'  	=> '',
-				'title'  			=> esc_html__( 'Theme Options', 'text-domain' ),
+				'title'  			=> esc_html__( 'Theme Options', 'edc-2015' ),
 			)
 		);
 
@@ -63,10 +63,10 @@ class function_names_Customize {
 		$wp_customize->add_section( 'new_section',
 			array(
 				'capability' 	=> 'edit_theme_options',
-				'description' 	=> esc_html__( 'New Customizer Section', 'text-domain' ),
+				'description' 	=> esc_html__( 'New Customizer Section', 'edc-2015' ),
 				'panel' 		=> 'theme_options',
 				'priority' 		=> 10,
-				'title' 		=> esc_html__( 'New Section', 'text-domain' )
+				'title' 		=> esc_html__( 'New Section', 'edc-2015' )
 			)
 		);
 

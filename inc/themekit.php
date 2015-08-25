@@ -49,7 +49,7 @@ class function_names_Themekit {
 	public function more_setup() {
 
 		register_nav_menus( array(
-			'social' => esc_html__( 'Social Links', 'text-domain' )
+			'social' => esc_html__( 'Social Links', 'edc-2015' )
 		) );
 
 		add_theme_support( 'yoast-seo-breadcrumbs' );
@@ -146,8 +146,8 @@ class function_names_Themekit {
 	 */
 	public function add_mime_types( $post_mime_types ) {
 
-	    $post_mime_types['application/pdf'] = array( esc_html__( 'PDFs', 'text-domain' ), esc_html__( 'Manage PDFs', 'text-domain' ), _n_noop( 'PDF <span class="count">(%s)</span>', 'PDFs <span class="count">(%s)</span>' ) );
-	    $post_mime_types['text/x-vcard'] = array( esc_html__( 'vCards', 'text-domain' ), esc_html__( 'Manage vCards', 'text-domain' ), _n_noop( 'vCard <span class="count">(%s)</span>', 'vCards <span class="count">(%s)</span>' ) );
+	    $post_mime_types['application/pdf'] = array( esc_html__( 'PDFs', 'edc-2015' ), esc_html__( 'Manage PDFs', 'edc-2015' ), _n_noop( 'PDF <span class="count">(%s)</span>', 'PDFs <span class="count">(%s)</span>' ) );
+	    $post_mime_types['text/x-vcard'] = array( esc_html__( 'vCards', 'edc-2015' ), esc_html__( 'Manage vCards', 'edc-2015' ), _n_noop( 'vCard <span class="count">(%s)</span>', 'vCards <span class="count">(%s)</span>' ) );
 
 	    return $post_mime_types;
 
@@ -205,7 +205,7 @@ class function_names_Themekit {
 			$args['after'] 			= '</span>';
 			$args['before'] 		= '<span rel="v:child" typeof="v:Breadcrumb">';
 			$args['delimiter'] 		= '&nbsp;>&nbsp;';
-			$args['home'] 			= esc_html_x( 'Home', 'breadcrumb', 'text-domain' );
+			$args['home'] 			= esc_html_x( 'Home', 'breadcrumb', 'edc-2015' );
 			$args['wrap_after'] 	= '</span></span></nav>';
 			$args['wrap_before'] 	= '<nav class="woocommerce-breadcrumb" ' . ( is_single() ? 'itemprop="breadcrumb"' : '' ) . '><span xmlns:v="http://rdf.data-vocabulary.org/#"><span typeof="v:Breadcrumb">';
 
@@ -298,7 +298,7 @@ class function_names_Themekit {
 
 		$return 	= '';
 		$families 	= '';
-		$fonts[] 	= array( 'font' => 'Oxygen', 'weights' => '400,700', 'translate' => esc_html_x( 'on', 'Oxygen font: on or off', 'text-domain' ) );
+		$fonts[] 	= array( 'font' => 'Oxygen', 'weights' => '400,700', 'translate' => esc_html_x( 'on', 'Oxygen font: on or off', 'edc-2015' ) );
 
 		foreach ( $fonts as $font ) {
 
