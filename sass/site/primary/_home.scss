@@ -1,3 +1,205 @@
 .home {
 
+	.content-area {
+		padding: 0;
+	}
+
+	.site-main {
+		display 		: flex;
+		flex-wrap 		: wrap;
+		justify-content : space-between;
+	}
+
+	.section-title {
+		font-weight 	: 400;
+		margin 			: 0;
+		text-transform 	: uppercase;
+
+		@media only screen and (min-width: $bp__tablet) {
+			font-size 		: 38px;
+		}
+	}
+
+	section {
+		width: 100%;
+	}
+
+	section.news {
+		margin-bottom 	: 4em;
+
+		@media only screen and (min-width: $bp__tablet) {
+			width: 47.5%;
+		}
+
+		.entry-title {
+			font-size 	: 20px;
+			font-weight : 400;
+			margin 		: 0;
+
+			a {
+				@include unline( $teal );
+			}
+		}
+
+		.entry-content {
+			margin-top: 0;
+
+			p {
+				margin: 0;
+			}
+		}
+
+		.read-more {
+			font-weight 	: 700;
+			text-transform 	: uppercase;
+			@include unline( $teal );
+		}
+
+		.link-news {
+			font-weight 	: 700;
+			text-align 		: right;
+			text-transform 	: lowercase;
+
+			a {
+				@include unline( $teal );
+			}
+		}
+	}
+
+	section.sites {
+		margin-bottom 	: 4em;
+
+		@media only screen and (min-width: $bp__tablet) {
+			width: 47.5%;
+		}
+
+		ul {
+			@extend %listreset;
+		}
+
+		li {
+			border-color 	: $teal;
+			border-style	: solid;
+			border-width 	: 1px 20px 1px 1px;
+			font-size 		: 22px;
+			margin-bottom	: 1em;
+			position 		: relative;
+			text-transform 	: uppercase;
+		}
+
+		.icon-menu {
+			display 		: block;
+			height 			: 110px;
+
+			@include unline( $teal );
+
+			svg {
+				fill 		: $teal;
+				height 		: $size__sites-svg-small;
+				margin-left : 0.5em;
+				position 	: absolute;
+				top 		: 50%;
+				transform 	: translateY(-50%);
+				width 		: $size__sites-svg-small;
+
+				@media only screen and (min-width: $bp__top-header-menu) {
+					height 		: $size__sites-svg-big;
+					margin-left : 1em;
+					width 		: $size__sites-svg-big;
+				}
+			}
+		}
+
+		.menu-label {
+			left 			: calc( #{$size__sites-svg-small} + 1em );
+			padding-right 	: 0.5em;
+			position 		: absolute;
+			top 			: 50%;
+			transform 		: translateY(-50%);
+
+			@media only screen and (min-width: $bp__top-header-menu) {
+				left 		: calc( #{$size__sites-svg-big} + 1.5em );
+			}
+		}
+	}
+
+	section.btn-mip {
+		background-color: $teal;
+		color 			: $light;
+		margin-bottom 	: 4em;
+		padding 		: 0.5em;
+		text-align 		: center;
+
+		@media only screen and (min-width: $bp__top-header-menu) {
+			padding: 1em;
+		}
+
+		@media only screen and (min-width: $bp__mip-btn) {
+			display 		: flex;
+			flex-wrap 		: wrap;
+			height 			: 120px;
+			justify-content : center;
+
+		}
+	}
+
+	.text-mip {
+		margin-bottom: 1em;
+
+		@media only screen and (min-width: $bp__mip-btn) {
+			display 	: inline-block;
+			height 		: 75px;
+			position 	: relative;
+			top 		: 50%;
+			transform 	: translateY(-50%);
+		}
+	}
+
+	.logo-mip {
+		max-width 	: 400px;
+		object-fit 	: contain;
+		width 		: 100%;
+
+		@media only screen and (min-width: $bp__mip-btn) {
+			display 	: inline-block;
+			height 		: 87px;
+			margin-left : 1em;
+			position 	: relative;
+			top 		: 50%;
+			transform 	: translateY(-50%);
+			width 		: 400px;
+
+		}
+	}
+
+	.mip-line1,
+	.mip-line2 {
+		display 		: block;
+		font-weight 	: 700;
+		line-height 	: 0.9;
+		text-align 		: center;
+		text-transform 	: uppercase;
+
+		@media only screen and (min-width: $bp__mip-btn) {
+			text-align: left;
+		}
+	}
+
+	.mip-line1 {
+		font-size 	: 38px;
+	}
+
+	.mip-line2 {
+		font-size 	: 45px;
+	}
+
+	.page-content {
+		margin 		: 0 0 1.5em;
+		text-align 	: center;
+
+		p {
+			margin: 0;
+		}
+	}
+
 }

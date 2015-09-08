@@ -1,0 +1,57 @@
+.widget_woothemes_testimonials {
+	background-color: $teal;
+	color 			: $light;
+	padding 		: 1em;
+
+	@media only screen and (min-width: $bp__tablet) {
+		margin 	: 2em 0;
+		padding : 0;
+
+		.testimonials-list {
+			margin 	: 0 auto;
+			position: relative;
+			width 	: 80%;
+		}
+
+		.quote {
+			margin 	: 0 auto;
+			width 	: 90%;
+
+			&:before,
+			&:after {
+				color 		: $light;
+				font-size 	: 200px;
+				position 	: absolute;
+				top 		: -45px;
+			}
+
+			&:before {
+				content : "“";
+				left 	: 0;
+			}
+
+			&:after {
+				content : "”";
+				right 	: 0;
+			}
+		}
+	}
+}
+
+.testimonials {
+
+	blockquote {
+		font-size 	: 30px;
+		margin 		: 0;
+		text-align 	: center;
+
+		@media only screen and (min-width: $bp__tablet) {
+			margin 		: 1em 3em;
+		}
+	}
+
+	cite {
+		display 	: block;
+		text-align 	: center;
+	}
+}

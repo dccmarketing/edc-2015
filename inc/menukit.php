@@ -24,10 +24,14 @@ class edc_2015_Menukit {
 	 */
 	private function loader() {
 
-		//add_filter( 'walker_nav_menu_start_el', array( $this, 'menu_caret' ), 10, 4 );
-		//add_filter( 'walker_nav_menu_start_el', array( $this, 'icon_before_menu_item' ), 10, 4 );
-		//add_filter( 'walker_nav_menu_start_el', array( $this, 'icon_after_menu_item' ), 10, 4 );
-		add_filter( 'walker_nav_menu_start_el', array( $this, 'icons_only_menu_item' ), 10, 4 );
+		add_filter( 'walker_nav_menu_start_el', array( $this, 'dashicon_before_menu_item' ), 10, 4 );
+		//add_filter( 'walker_nav_menu_start_el', array( $this, 'dashicon_after_menu_item' ), 10, 4 );
+		//add_filter( 'walker_nav_menu_start_el', array( $this, 'dashicon_only_menu_item' ), 10, 4 );
+		add_filter( 'walker_nav_menu_start_el', array( $this, 'menu_caret' ), 10, 4 );
+		add_filter( 'walker_nav_menu_start_el', array( $this, 'svg_before_menu_item' ), 10, 4 );
+		//add_filter( 'walker_nav_menu_start_el', array( $this, 'svg_after_menu_item' ), 10, 4 );
+		add_filter( 'walker_nav_menu_start_el', array( $this, 'svg_only_menu_item' ), 10, 4 );
+		add_filter( 'walker_nav_menu_start_el', array( $this, 'search_icon_only' ), 10, 4 );
 		add_shortcode( 'listmenu', array( $this, 'list_menu' ) );
 		add_filter( 'wp_setup_nav_menu_item', array( $this, 'add_menu_title_as_class' ), 10, 1 );
 
@@ -53,6 +57,107 @@ class edc_2015_Menukit {
 	} // add_menu_title_as_class()
 
 	/**
+	 * Adds an Dashicon icon before the menu item text
+	 *
+	 * @link 	http://www.billerickson.net/customizing-wordpress-menus/
+	 *
+	 * @param 	string 		$item_output		//
+	 * @param 	object 		$item				//
+	 * @param 	int 		$depth 				//
+	 * @param 	array 		$args 				//
+	 *
+	 * @return 	string 							modified menu
+	 */
+	public function dashicon_before_menu_item( $item_output, $item, $depth, $args ) {
+
+		if ( 'footer' !== $args->theme_location ) { return $item_output; }
+
+		$atts 	= $this->get_attributes( $item );
+		$class 	= $item->classes[0];
+
+		if ( empty( $class ) ) { return $item_output; }
+
+		$output = '';
+
+		$output .= '<a href="' . $item->url . '" class="icon-menu" ' . $atts . '>';
+		$output .= '<span class="dashicons dashicons-' . $class . '"></span>';
+		$output .= '<span class="menu-label">';
+		$output .= $item->title;
+		$output .= '</span>';
+		$output .= '</a>';
+
+		return $output;
+
+	} // dashicon_before_menu_item()
+
+	/**
+	 * Adds a Dashicon after the menu item text
+	 *
+	 * @link 	http://www.billerickson.net/customizing-wordpress-menus/
+	 *
+	 * @param 	string 		$item_output		//
+	 * @param 	object 		$item				//
+	 * @param 	int 		$depth 				//
+	 * @param 	array 		$args 				//
+	 *
+	 * @return 	string 							modified menu
+	 */
+	public function dashicon_after_menu_item( $item_output, $item, $depth, $args ) {
+
+		if ( '' !== $args->theme_location || '' !== $args->theme_location ) { return $item_output; }
+
+		$atts 	= $this->get_attributes( $item );
+		$class 	= $item->classes[0];
+
+		if ( empty( $class ) ) { return $item_output; }
+
+		$output = '';
+
+		$output .= '<a href="' . $item->url . '" class="icon-menu" ' . $atts . '>';
+		$output .= '<span class="menu-label">';
+		$output .= $item->title;
+		$output .= '</span>';
+		$output .= '<span class="dashicons dashicons-' . $class . '"></span>';
+		$output .= '</a>';
+
+		return $output;
+
+	} // dashicon_after_menu_item()
+
+	/**
+	 * Replaces menu item text with an Dashicon
+	 *
+	 * @link 	http://www.billerickson.net/customizing-wordpress-menus/
+	 *
+	 * @param 	string 		$item_output		//
+	 * @param 	object 		$item				//
+	 * @param 	int 		$depth 				//
+	 * @param 	array 		$args 				//
+	 *
+	 * @return 	string 							modified menu
+	 */
+	public function dashicon_only_menu_item( $item_output, $item, $depth, $args ) {
+
+		if ( '' !== $args->theme_location ) { return $item_output; }
+
+		$atts 	= $this->get_attributes( $item );
+		$class 	= $item->classes[0];
+
+		if ( empty( $class ) ) { return $item_output; }
+
+		$output = '';
+
+		$output .= '<a href="' . $item->url . '" class="icon-menu" ' . $atts . '>';
+		$output .= '<span class="screen-reader-text">';
+		$output .= $item->title . '</span>';
+		$output .= '<span class="dashicons dashicons-' . $class . '"></span>';
+		$output .= '</a>';
+
+		return $output;
+
+	} // dashicon_only_menu_item()
+
+	/**
 	 * Add Down Caret to Menus with Children
 	 *
 	 * @global 		 			$dcc_2015_themekit 			Themekit class
@@ -68,15 +173,16 @@ class edc_2015_Menukit {
 
 		if ( ! in_array( 'menu-item-has-children', $item->classes ) ) { return $item_output; }
 
-		global $dcc_2015_themekit;
+		global $edc_2015_themekit;
 
 		$atts 	= $this->get_attributes( $item );
 		$output = '';
 
 		$output .= '<a href="' . $item->url . '">';
 		$output .= $item->title;
-		$output .= '<span class="children">' . $dcc_2015_themekit->get_svg( 'caret-down' ) . '</span>';
+		$output .= '<span class="dashicons dashicons-arrow-down children"></span>';
 		$output .= '</a>';
+		$output .= '<span class="show-hide">+</span>';
 
 		return $output;
 
@@ -94,9 +200,9 @@ class edc_2015_Menukit {
 	 *
 	 * @return 	string 							modified menu
 	 */
-	public function icon_before_menu_item( $item_output, $item, $depth, $args ) {
+	public function svg_before_menu_item( $item_output, $item, $depth, $args ) {
 
-		if ( 'services' !== $args->theme_location && 'subheader' !== $args->theme_location ) { return $item_output; }
+		if ( 'sites' !== $args->theme_location ) { return $item_output; }
 
 		$atts 	= $this->get_attributes( $item );
 		$class 	= $this->get_svg_by_class( $item->classes );
@@ -114,7 +220,7 @@ class edc_2015_Menukit {
 
 		return $output;
 
-	} // icon_before_menu_item()
+	} // svg_before_menu_item()
 
 	/**
 	 * Adds an SVG icon after the menu item text
@@ -128,7 +234,7 @@ class edc_2015_Menukit {
 	 *
 	 * @return 	string 							modified menu
 	 */
-	public function icon_after_menu_item( $item_output, $item, $depth, $args ) {
+	public function svg_after_menu_item( $item_output, $item, $depth, $args ) {
 
 		if ( '' !== $args->theme_location || 'subheader' !== $args->theme_location ) { return $item_output; }
 
@@ -148,7 +254,7 @@ class edc_2015_Menukit {
 
 		return $output;
 
-	} // icon_after_menu_item()
+	} // svg_after_menu_item()
 
 	/**
 	 * Replaces menu item text with an SVG icon
@@ -162,7 +268,7 @@ class edc_2015_Menukit {
 	 *
 	 * @return 	string 							modified menu
 	 */
-	public function icons_only_menu_item( $item_output, $item, $depth, $args ) {
+	public function svg_only_menu_item( $item_output, $item, $depth, $args ) {
 
 		if ( 'social' !== $args->theme_location ) { return $item_output; }
 
@@ -174,9 +280,53 @@ class edc_2015_Menukit {
 		$output = '';
 
 		$output .= '<a href="' . $item->url . '" class="icon-menu" ' . $atts . '>';
-		$output .= '<span class="screen-reader-text">' . $item->title . '</span>';
+		$output .= '<span class="screen-reader-text">';
+
+		if ( 'phone2' === $item->classes[0] ) {
+
+			$output .= 'Call ';
+
+		}
+
+		$output .= $item->title . '</span>';
 		$output .= $class;
+
+		if ( 'phone2' === $item->classes[0] ) {
+
+			$output .= '<span class="text-phone">' . $item->title . '</span>';
+
+		}
+
 		$output .= '</a>';
+
+		return $output;
+
+	} // svg_only_menu_item()
+
+	/**
+	 * Replaces only the search menu item with an icon
+	 *
+	 * @link 	http://www.billerickson.net/customizing-wordpress-menus/
+	 *
+	 * @param 	string 		$item_output		//
+	 * @param 	object 		$item				//
+	 * @param 	int 		$depth 				//
+	 * @param 	array 		$args 				//
+	 *
+	 * @return 	string 							modified menu
+	 */
+	public function search_icon_only( $item_output, $item, $depth, $args ) {
+
+		if ( 'top-header' !== $args->theme_location ) { return $item_output; }
+		if ( 'Search' !== $item->post_title ) { return $item_output; }
+
+		//showme( $item );
+
+		$atts 	= $this->get_attributes( $item );
+		$output = '';
+		$output .= '<div class="btn-search dashicons dashicons-search" ' . $atts . '>';
+		$output .= '<span class="screen-reader-text">' . $item->title . '</span>';
+		$output .= '</div>';
 
 		return $output;
 

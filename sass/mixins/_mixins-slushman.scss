@@ -1,3 +1,22 @@
+
+/**
+ * Adds spacing for the WP Admin bar. Default property is "top".
+ *
+ * @param  string 	$prop 	The CSS property to affect
+ * @param  int 		$size 	Additional space needed
+ */
+@mixin adminbar( $prop: 'top', $size: 0 ) {
+
+	.admin-bar & {
+		#{$prop}: $size__wp-admin-bar-1 + $size;
+
+		@media only screen and (min-width: $bp__admin-bar-1) {
+			#{$prop}: $size__wp-admin-bar-2 + $size;
+		}
+	}
+}
+
+
 /**
  * Sets the appearance of an item
  *
@@ -8,6 +27,8 @@
  *     button: like a button
  *     menu: set of options to choose from
  *     field: like an input field
+ *
+ * @param 	string 		$type 		The appearance value to use
  */
 @mixin appearance( $type ) {
 	appearance			: $type;
@@ -138,82 +159,19 @@
 	filter				: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color');
 }
 
-
-%buttonreset {
-	border 			: none;
-	box-shadow 		: none;
-	text-shadow 	: none;
-	font-size 		: 1em;
-	border-radius 	: 0;
-	background 		: transparent;
-	padding 		: 0;
-}
-
-%clearafter {
-	&:after {
-		display 	: block;
-		height 		: 0;
-		clear 		: both;
-		visibility 	: hidden;
-		content 	: "";
-	}
-}
-
 /**
- * Hides text
+ * Style used for links. Removes the default underline except on hover
+ * Sets the color of the link.
+ *
+ * @param  {[type]} $color [description]
+ * @return {[type]}        [description]
  */
-%hidetext {
-	text-indent	: 100%;
-	overflow	: hidden;
-	white-space	: nowrap;
-	font-size 	: 0;
-}
+@mixin unline( $color, $hover: '' ) {
+	color 			: $color;
+	text-decoration : none;
 
-%listreset {
-	list-style 	: none;
-	margin 		: 0;
-	padding 	: 0;
-}
-
-%menutoggle {
-	display			: block;
-	width			: 100%;
-	border			: none;
-	line-height		: 1.25em;
-	font-size		: 1.25em;
-	box-shadow		: none;
-	border-radius	: 0;
-	text-shadow		: none;
-	outline 		: 0;
-	background		: $color__bg-menu-button-mobile;
-	color 			: $color__text-menu-button-mobile;
-
-	&:hover,
-	&:focus,
-	&:active {
-		border		: none;
-		box-shadow	: none;
-		border-color: inherit;
-		background 	: $color__bg-menu-button-pseudo;
+	&:hover {
+		color 			: #{$hover};
+		text-decoration : underline;
 	}
-
-	@media only screen and (min-width: $bp__tablet) {
-		background-color: transparent;
-	}
-
-	@media only screen and (min-width: $bp__menu-button+1) {
-		z-index: 9999;
-	}
-}
-
-%nobreak {
-	-webkit-column-break-inside : avoid;
-	page-break-inside 			: avoid;
-	break-inside 				: avoid;
-}
-
-%vertcenter {
-	position 	: relative;
-	top 		: 50%;
-	transform 	: translateY(-50%);
 }

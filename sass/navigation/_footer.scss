@@ -1,0 +1,71 @@
+.nav-footer {
+	background-color: $teal;
+	font-size 		: 22px;
+	padding 		: 2em 0;
+	text-transform 	: uppercase;
+
+	ul {
+		@extend %listreset;
+		display 		: flex;
+		flex-wrap 		: wrap;
+		justify-content : center;
+	}
+
+	li {
+		width: 100%;
+
+		@media only screen and (max-width: $bp__top-header-menu - 1) {
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+
+		@media only screen and (min-width: $bp__top-header-menu) {
+			width 		: auto;
+
+			&:first-child {
+				margin-right: 10%;
+			}
+		}
+	}
+
+	a {
+		@include unline( $light );
+		border 				: 1px solid $light;
+		border-bottom-width : 20px;
+		color 				: $light;
+		display 			: block;
+		margin 				: 0 auto 1.5em;
+		padding 			: 1em;
+		text-align 			: center;
+		width 				: 200px;
+
+		@media only screen and (min-width: $bp__top-header-menu) {
+			margin: 0;
+		}
+
+		&:hover,
+		&:visited {
+			color: $light;
+		}
+	}
+
+	.dashicons {
+		font-size 		: 2em;
+		height 			: 1.5em;
+		text-align 		: center;
+		text-decoration : none;
+		width 			: 100%;
+
+		&:before {
+			border 			: 2px solid $light;
+			border-radius 	: 50%;
+			height 			: 2em;
+			line-height 	: 1.5;
+			padding 		: 4px;
+			text-align 		: center;
+			width 			: 2em;
+		}
+	}
+}

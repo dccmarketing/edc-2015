@@ -164,4 +164,7 @@ require get_template_directory() . '/inc/themekit.php';
  */
 require get_template_directory() . '/inc/menukit.php';
 
-
+/**
+ * Load Main Menu Walker
+ */
+require get_template_directory() . '/inc/main-menu-walker.php';

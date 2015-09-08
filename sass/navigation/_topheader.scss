@@ -1,0 +1,39 @@
+.nav-topheader {
+
+	@media only screen and (min-width: $bp__header1) {
+		//display 	: inline-block;
+		//text-align 	: right;
+	}
+
+	ul {
+		@extend %listreset;
+		margin 		: 0 auto;
+		max-width 	: 300px;
+		text-align 	: center;
+
+		@media only screen and (min-width: $bp__top-header-menu) {
+			max-width: none;
+		}
+
+		@media only screen and (min-width: $bp__header1) {
+			text-align: left;
+		}
+
+		@media only screen and (min-width: $bp__top-header-2) {
+			text-align: right;
+		}
+
+		li {
+			display: inline-block;
+			padding: 1em;
+		}
+	}
+
+	a {
+		@include unline( $light );
+	}
+
+	.btn-search {
+		font-size 	: 2em;
+	}
+}

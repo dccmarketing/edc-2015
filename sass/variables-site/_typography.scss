@@ -9,9 +9,35 @@
 	font-style 	: normal;
 }
 
-$font__main 				: sans-serif;
+$font__main 				: 'Helvetica', 'Arial', sans-serif;
 $font__code 				: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
 $font__pre 					: "Courier 10 Pitch", Courier, monospace;
 $font__line-height-body 	: 1.5;
 $font__line-height-pre 		: 1.6;
 $font__size-social 			: 36px;
+
+/*
+top menu: 16, white on transteal
+main menu: 20, white on transteal
+phone: 18, teal on white
+social: 18, white on teal
+
+slide, headline: 75, bold, uppercase, white
+slide, subtitle: 38, bold, uppercase, white
+slide, bottom headline: 40, italic (oblique), bold, uppercase, white on gray
+slide, bottom subtitle: 25, oblique (italic), uppercase, white on gray
+slide, button: 20, oblique, bold, uppercase, white on teal
+
+homepage section title: 38, gray on white
+homepage news item title: 20, teal on white
+homepage new content: 16, gray on white
+homepage new item link: 16, bold, uppercase, teal on white
+homepage view all news link: 16, bold, lowercase, teal on white
+homepage buttons: 22, uppercase, teal on white
+homepage MIP banner: 38/45, bold, uppercase, white on teal
+
+footer quote: 22, oblique, white on teal
+footer text: 16, white on gray
+footer address: 13, white on gray
+footer menu: 22, uppercase, white on teal
+ */

@@ -9,6 +9,10 @@
  * @package EDC 2015
  */
 
+global $edc_2015_themekit;
+
+$mods = get_theme_mods();
+
 		?></div><!-- .wrap -->
 	</div><!-- #content --><?php
 
@@ -16,9 +20,14 @@
 
 	?><footer id="colophon" class="site-footer" role="contentinfo">
 		<div class="wrap wrap-footer">
+			<div class="text-footer"><?php echo $mods['footer_text']; ?></div>
+			<div class="logo-limitless"><a href="<?php echo esc_url( 'http://decaturcitylimitless.com' ); ?>"><?php $edc_2015_themekit->the_svg( 'limitless' ); ?></a></div>
 			<div class="site-info">
-				<div class="copyright">&copy <?php echo date( 'Y' ); ?> <a href="<?php echo esc_url( get_admin_url(), 'edc-2015' ); ?>"><?php echo get_bloginfo( 'name' ); ?></a></div>
-				<div class="credits"><?php printf( esc_html__( 'Site created by %1$s', 'edc-2015' ), '<a href="https://dccmarketing.com/" target="_blank">DCC Marketing</a>' ); ?></div>
+				<ul>
+					<li class="copyright">&copy <?php echo date( 'Y' ); ?> <a href="<?php echo esc_url( get_admin_url(), 'edc-2015' ); ?>"><?php echo $mods['footer_owner']; ?></a></li>
+					<li class="address"><address><?php echo $mods['footer_address']; ?></address></li>
+					<li class="phone"><?php echo $edc_2015_themekit->make_phone_link( $mods['footer_phone'] ); ?></li>
+				</ul>
 			</div><!-- .site-info -->
 		</div><!-- .wrap-footer -->
 	</footer><!-- #colophon -->

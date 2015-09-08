@@ -1,4 +1,7 @@
 .nav-social {
+	margin 			: 0 auto;
+	max-width 		: 1000px;
+	pointer-events 	: none;
 
 	.screen-reader-text,
 	a {
@@ -7,17 +10,100 @@
 
 	.menu-items {
 		@extend %listreset;
-	}
+ 		display 		: flex;
+		flex-wrap 		: wrap;
+		pointer-events 	: none;
+
+		@media only screen and (min-width: $bp__tablet) {
+			margin-left : 1em;
+			max-width 	: $size__logo-width
+		}
+
+		@media only screen and (min-width: $bp__laptop) {
+			margin-left: 0.5em;
+		}
+ 	}
 
 	.menu-item {
-		display 	: inline-block;
-		line-height : 1.5;
-		margin 		: 0 0.5em;
-		position 	: relative;
+		background-color: $ltgray;
+		flex-grow 		: 1;
+		line-height 	: 1;
+		padding 		: 0.75em;
+		pointer-events 	: all;
+		text-align 		: center;
 
 		svg {
+			fill 	: $teal;
 			height 	: $font__size-social;
 			width 	: $font__size-social;
+
+			@media only screen and (min-width: $bp__tablet) {
+				fill: $light;
+			}
+		}
+
+		@media only screen and (min-width: $bp__tablet) {
+			background-color: $teal;
+			padding 		: 0.35em 0.25em;
+
+			&.phone2 {
+				background-color: $ltgray;
+				padding 		: 0.6em;
+				width 			: 100%;
+
+				svg {
+					fill 	: $teal;
+					height 	: 28px;
+					width 	: 28px;
+				}
+			}
+		}
+	}
+
+	.text-phone {
+
+		@media only screen and (min-width: $bp__tablet) {
+			color 			: $teal;
+			display 		: inline-block;
+			font-size 		: 18px;
+			margin-top 		: 0.25em;
+			text-indent 	: 0.5em;
+			vertical-align 	: top;
+		}
+	}
+}
+
+.wrap-social-menu {
+	pointer-events 	: none;
+	transition 		: transform $trans__default;
+
+	.home & {
+		top: $size__header-height + 12px;
+
+		@media only screen and (min-width: $bp__laptop) {
+			top: $size__header-height;
+		}
+	}
+
+	.home.admin-bar & {
+		top: $size__wp-admin-bar-1 + $size__header-height + 12px;
+
+		@media only screen and (min-width: $bp__admin-bar-1) {
+			top: $size__wp-admin-bar-2 + $size__header-height + 12px;
+		}
+
+		@media only screen and (min-width: $bp__laptop) {
+			top: $size__wp-admin-bar-2 + $size__header-height;
+		}
+	}
+
+	@media only screen and (min-width: $bp__tablet) {
+		left 		: 0;
+		position 	: absolute;
+		width 		: 100%;
+
+		.home .open & {
+			transform: translateY( $size__hidden-search );
 		}
 	}
 }

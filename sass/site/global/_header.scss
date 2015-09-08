@@ -1,26 +1,128 @@
 .site-header {
 	// DO NOT ADD PADDING HERE! - it screws up menus
-	margin-bottom	: $size__default-bot-marg;
+	background-color: $teal;
+	color 			: $light;
 	overflow 		: auto;
+	transition 		: $trans__default;
+	width 			: 100%;
 
-	@media only screen and (min-width: $bp__menu-button+1) {
+	@media only screen and (min-width: $bp__tablet) {
 		overflow 	: visible;
+
+		.home & {
+			position: absolute;
+			top 	: 0;
+		}
+
+		.home.admin-bar & {
+			top: $size__wp-admin-bar-1;
+
+			@media only screen and (min-width: $bp__admin-bar-1) {
+				top: $size__wp-admin-bar-2;
+			}
+		}
+	}
+
+	@media only screen and (min-width: $bp__tablet) {
+		background-color: $transteal;
+	}
+
+	&.open {
+		.home & {
+			top: $size__hidden-search;
+		}
+
+		.home.admin-bar & {
+			top: $size__wp-admin-bar-1 + $size__hidden-search;
+
+			@media only screen and (min-width: $bp__admin-bar-1) {
+				top: $size__wp-admin-bar-2 + $size__hidden-search;
+			}
+		}
+	}
+
+	a {
+		@include unline( $color__text-site-title );
+	}
+
+	.wrap {
+
+		@media only screen and (min-width: $bp__header1) {
+			position: relative;
+
+			&:after {
+				clear 	: both;
+				content : "";
+				display : block;
+			}
+		}
+
+		@media only screen and (min-width: $bp__menu-button+1) {
+			display 		: flex;
+			height 			: $size__header-height;
+			padding 		: 0.5em;
+			padding-bottom 	: 0;
+			position 		: static;
+		}
 	}
 }
 
 .site-branding {
-	margin		: 0 auto;
-}
 
-.site-title {
-	text-align: center;
+	@media only screen and (min-width: $bp__header1) {
+		display 		: inline-block;
+		vertical-align 	: top;
+		width 			: $size__logo-width;
+	}
+
+	.site-logo {
+		@media only screen and (max-width: $bp__header1 - 1) {
+			text-align: center;
+		}
+	}
+
+	.logo {
+		max-width 	: 185px;
+	}
+
+	p {
+		margin 			: 0;
+		text-transform 	: uppercase;
+	}
 
 	a {
-		color 			: $color__text-site-title;
-		text-decoration : none;
+		display: block;
 	}
 }
 
+.header-menus {
+
+	@media only screen and (min-width: $bp__header1) {
+		display 		: inline-block;
+		vertical-align 	: top;
+		width 			: calc( 100% - 190px );
+	}
+}
+
+.site-title {
+	font-size 	: 11px;
+	text-align 	: center;
+}
+
 .site-description {
-	text-align: center;
+	font-size 	: 11px;
+	text-align 	: center;
+}
+
+.after-header-subpage {
+	background-color 	: $gray;
+	background-position : center center;
+	background-size 	: cover;
+	background-repeat 	: no-repeat;
+	height 				: 300px;
+	width 				: 100%;
+
+	.community-profile & {
+		height: 350px;
+	}
 }

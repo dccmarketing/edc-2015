@@ -1,31 +1,33 @@
 .main-navigation {
 	clear			: both;
 	display			: block;
-	float			: left;
 	width			: 100%;
 
 	ul {
 		@extend %listreset;
 		display 	: none;
-		text-align 	: left;
 
 		@media only screen and (min-width: $bp__menu-button+1) {
 			display 	: block;
-			text-align	: center;
+			text-align	: right;
 		}
 
 		ul {
-			background-color: $color__bg-menu-item-mobile;
+			//background-color: $color__bg-menu-item-mobile;
 			display			: inherit;
 
 			@media only screen and (min-width: $bp__menu-button+1) {
-				box-shadow	: 0 3px 3px rgba(0, 0, 0, 0.2);
-				left 		: 0;
-				opacity 	: 0;
-				position	: absolute;
-				transition 	: visibility 0s ease 0.5s,opacity 0.5s ease;
-				visibility 	: hidden;
-				z-index		: 99999;
+				background-color: transparent;
+				color 			: $gray;
+				margin 			: 0 auto;
+				max-width 		: $size__max-width;
+				opacity 		: 0;
+				padding-left 	: 225px;
+				text-align 		: left;
+				transition 		: $trans__default;
+				visibility 		: hidden;
+				width 			: 100%;
+				z-index			: 99999;
 			} // breakpoint
 
 			ul {
@@ -49,8 +51,9 @@
 				}
 
 				@media only screen and (min-width: $bp__menu-button+1) {
-					color 		: $color__text-submenu;
-					white-space : nowrap;
+					color 			: $gray;
+					padding-bottom 	: 0.5em;
+					white-space 	: nowrap;
 				}
 			}
 
@@ -63,48 +66,91 @@
 					}
 				}
 
+				&:hover,
+				&:focus {
+
+					> a {
+						background-color: $gray;
+						color 			: $color__text-menu-mobile-hover;
+					}
+				}
 			}
 		} // .submenu ul
+
+		> li {
+			@media only screen and (max-width: $bp__menu-button) {
+				position: relative;
+
+				&.menu-item-has-children {
+
+					.sub-menu {
+						display: none;
+					}
+
+					.show-hide {
+						cursor 		: pointer;
+						position 	: absolute;
+						right 		: 0;
+						text-align 	: center;
+						top 		: 0.5em;
+						width 		: 2em;
+					}
+				}
+			}
+
+			@media only screen and (min-width: $bp__menu-button+1) {
+				.show-hide {
+					display: none;
+				}
+			}
+		}
 	} // first-level ul
 
 	li {
 
 		@media only screen and (min-width: $bp__menu-button+1) {
-			display 	: inline-block;
-			position 	: relative;
+			display 		: inline-block;
+			vertical-align 	: top;
 		}
 
 		&:hover,
 		&.focus {
 
-			> ul {
+			.wrap-submenu,
+			.wrap-submenu > ul {
 				@media only screen and (min-width: $bp__menu-button+1) {
-					display 	: block;
 					opacity 	: 1;
 					visibility 	: visible;
 				}
 			}
 
 			> a {
-				background-color: $color__bg-menu-item-mobile;
-				color 			: $color__text-menu-mobile-hover;
-
-				@media only screen and (min-width: $bp__menu-button+1) {
-					color: $color__text-menu-hover;
-				}
+				text-decoration : none;
 			}
+		}
 
+		&.open {
+
+			> .wrap-submenu,
+			> .wrap-submenu ul,
+			a .dashicons.children {
+				opacity 	: 1;
+				visibility 	: visible;
+			}
 		}
 	}
 
 	a {
 		color 			: $color__text-menu-mobile;
 		display			: block;
-		padding 		: 0.5em 1em;
+		font-size 		: 20px;
+		padding 		: 0.5em;
 		text-decoration	: none;
+		transition 		: color $trans__default;
 
 		@media only screen and (min-width: $bp__menu-button+1) {
-			color: $color__text-menu;
+			color 			: $color__text-menu;
+			padding-bottom 	: 20px;
 		}
 
 		&:focus {
@@ -117,20 +163,10 @@
 	.current-menu-parent,
 	.current_page_ancestor {
 
-		@media only screen and (min-width: $bp__menu-button+1) {
-			background-color: $color__bg-menu-current;
-		}
-
 		> a {
-			color: $color__text-menu-current;
-		}
-
-		&:hover,
-		&.focus {
-
-			> a {
-				color: $color__text-menu-current-hover;
-			}
+			font-weight 	: 700;
+			padding-bottom 	: 0.5em;
+			text-transform 	: uppercase;
 		}
 	}
 
@@ -138,19 +174,27 @@
 
 		.nav-menu {
 			@extend %menutoggle;
+			background-color: transparent;
 		}
 
 		.menu-main-menu-container {
-			@media only screen and (min-width: $bp__tablet) and (max-width: $bp__laptop) {
+			@media only screen and (min-width: $bp__header1) and (max-width: $bp__laptop) {
 				transform: translateX(0);
 			}
-
 		}
 
 		.menu-toggle {
-			right: $size__menu_width;
+
+			.dashicons-arrow-left {
+				@media only screen and (min-width: $bp__header1) {
+					font-size 	: 1.65em;
+					height 		: 20px;
+					width 		: 20px;
+				}
+			}
 		}
 	}
+
 } // .main-navigation
 
 // Center Menu
@@ -160,8 +204,8 @@
 	/**
 	 * Tablet menu - slide in from left - on top or pushing content
 	 */
-	@media only screen and (min-width: $bp__tablet) and (max-width: $bp__laptop) {
-		background-color: $dark;
+	@media only screen and (min-width: $bp__header1) and (max-width: $bp__laptop) {
+		background-color: $transteal;
 		bottom 			: 0;
 		height 			: 100%;
 		left 			: 0;
@@ -183,13 +227,29 @@
 	}
 }
 
+.wrap-submenu {
+
+	@media only screen and (min-width: $bp__menu-button+1) {
+		background-color: $ltgray;
+		content 		: "";
+		left 			: 0;
+		opacity 		: 0;
+		position 		: absolute;
+		transition 		: $trans__default;
+		width 			: 100%;
+		visibility 		: hidden;
+	}
+}
 
 /* Small menu */
 .menu-toggle {
 	@extend %menutoggle;
+	margin 		: 0 auto;
+	max-width 	: 300px;
 
-	@media only screen and (min-width: $bp__tablet) and (max-width: $bp__laptop) {
+	@media only screen and (min-width: $bp__header1) and (max-width: $bp__laptop) {
 		background-color: $color__bg-menu-button;
+		bottom 			: 0;
 		color 			: $color__text-menu-button;
 		position 		: absolute;
 		right 			: 0;
@@ -200,11 +260,45 @@
 	@media only screen and (min-width: $bp__menu-button+1) {
 		display 		: none;
 	}
+
+	.dashicons-arrow-left {
+		font-size 		: 0;
+		height 			: 0;
+		line-height 	: 0.75;
+		margin-right 	: 0.125em;
+		transition 		: $trans__default;
+		width 			: 0;
+	}
+
+	.dashicons-menu {
+		font-size 	: 1.25em;
+		margin-right: 0.25em;
+	}
 }
 
-.children-caret {
-	display 	: inline-block;
-	height 		: 0.75em;
-	margin-left : 0.25em;
-	width 		: 0.75em;
+.dashicons.children {
+	display: none;
+
+	@media only screen and (min-width: $bp__menu-button+1) {
+		display 	: block;
+		font-size 	: 2em;
+		line-height : 0.75;
+		margin 		: 0 auto;
+		opacity 	: 0;
+		width 		: 1em;
+
+		.current_page_item a &,
+		.current-menu-item a &,
+		.current-menu-parent a &,
+		.current_page_ancestor a & {
+			display 	: block;
+			height 		: 0.75em;
+			width 		: 0.75em;
+		}
+
+		li:hover &,
+		li.focus & {
+			opacity: 1;
+		}
+	}
 }

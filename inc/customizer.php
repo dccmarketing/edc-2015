@@ -30,7 +30,7 @@ class edc_2015_Customize {
 	*
 	* Existing sections:
 	*
-	* title_tagline - Site Title & Tagline
+	* title_tagline - Site Identity
 	* colors - Colors
 	* header_image - Header Image
 	* background_image - Background Image
@@ -44,6 +44,240 @@ class edc_2015_Customize {
 	* @since 		1.0.0
 	*/
 	public static function register( $wp_customize ) {
+
+		// Theme Options Panel
+		$wp_customize->add_panel( 'theme_options',
+			array(
+				'capability'  		=> 'edit_theme_options',
+				'description'  		=> esc_html__( 'Options for EDC 2015', 'edc-2015' ),
+				'priority'  		=> 10,
+				'theme_supports'  	=> '',
+				'title'  			=> esc_html__( 'Theme Options', 'edc-2015' ),
+			)
+		);
+
+
+
+		// Sections
+
+		// Home Page
+		$wp_customize->add_section( 'homepage',
+			array(
+				'capability' 	=> 'edit_theme_options',
+				'description' 	=> esc_html__( 'Options for the home page', 'edc-2015' ),
+				'panel' 		=> 'theme_options',
+				'priority' 		=> 10,
+				'title' 		=> esc_html__( 'Homepage', 'edc-2015' )
+			)
+		);
+
+		// Footer Options
+		$wp_customize->add_section( 'footer_options',
+			array(
+				'capability' 	=> 'edit_theme_options',
+				'description' 	=> esc_html__( 'Options for the site footer', 'edc-2015' ),
+				'panel' 		=> 'theme_options',
+				'priority' 		=> 10,
+				'title' 		=> esc_html__( 'Footer Options', 'edc-2015' )
+			)
+		);
+
+
+
+
+		// Fields
+
+		// Site Logo Field
+		$wp_customize->add_setting(
+			'site_logo',
+			array(
+				'default' => '',
+				'transport' => 'postMessage'
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Image_Control(
+				$wp_customize,
+				'site_logo',
+				array(
+					'description' 	=> esc_html__( '', 'edc-2015' ),
+					'label' => esc_html__( 'Site Logo', 'edc-2015' ),
+					'section' => 'title_tagline',
+					'settings' => 'site_logo'
+				)
+			)
+		);
+		$wp_customize->get_setting( 'site_logo' )->transport = 'postMessage';
+
+
+
+
+		// MIP Promo Button Line 1 Field
+		$wp_customize->add_setting(
+			'mip_promo_line1',
+			array(
+				'default'  	=> '',
+				'transport' => 'postMessage'
+			)
+		);
+		$wp_customize->add_control(
+			'mip_promo_line1',
+			array(
+				'description' 	=> esc_html__( '', 'edc-2015' ),
+				'label'  	=> esc_html__( 'MIP Promo Button Line 1', 'edc-2015' ),
+				'section'  	=> 'homepage',
+				'settings' 	=> 'mip_promo_line1',
+				'type' 		=> 'text'
+			)
+		);
+		$wp_customize->get_setting( 'mip_promo_line1' )->transport = 'postMessage';
+
+		// MIP Promo Button Line 2 Field
+		$wp_customize->add_setting(
+			'mip_promo_line2',
+			array(
+				'default'  	=> '',
+				'transport' => 'postMessage'
+			)
+		);
+		$wp_customize->add_control(
+			'mip_promo_line2',
+			array(
+				'description' 	=> esc_html__( '', 'edc-2015' ),
+				'label'  	=> esc_html__( 'MIP Promo Button Line 2', 'edc-2015' ),
+				'section'  	=> 'homepage',
+				'settings' 	=> 'mip_promo_line2',
+				'type' 		=> 'text'
+			)
+		);
+		$wp_customize->get_setting( 'mip_promo_line2' )->transport = 'postMessage';
+
+		// MIP Promo Button Logo Field
+		$wp_customize->add_setting(
+			'mip_promo_logo',
+			array(
+				'default' => '',
+				'transport' => 'postMessage'
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Image_Control(
+				$wp_customize,
+				'mip_promo_logo',
+				array(
+					'description' 	=> esc_html__( '', 'edc-2015' ),
+					'label' => esc_html__( 'MIP Promo Logo', 'edc-2015' ),
+					'section' => 'homepage',
+					'settings' => 'mip_promo_logo'
+				)
+			)
+		);
+		$wp_customize->get_setting( 'mip_promo_logo' )->transport = 'postMessage';
+
+		// YouTube URL Field
+		$wp_customize->add_setting(
+			'youtube_url',
+			array(
+				'default'  	=> '',
+				'transport' => 'postMessage'
+			)
+		);
+		$wp_customize->add_control(
+			'youtube_url',
+			array(
+				'description' 	=> esc_html__( '', 'edc-2015' ),
+				'label' => esc_html__( 'YouTube URL', 'edc-2015' ),
+				'section' => 'homepage',
+				'settings' => 'youtube_url',
+				'type' => 'url'
+			)
+		);
+		$wp_customize->get_setting( 'youtube_url' )->transport = 'postMessage';
+
+
+
+
+
+
+		// Footer Text Field
+		$wp_customize->add_setting(
+			'footer_text',
+			array(
+				'default'  	=> '',
+				'transport' => 'postMessage'
+			)
+		);
+		$wp_customize->add_control(
+			'footer_text',
+			array(
+				'description' 	=> esc_html__( '', 'edc-2015' ),
+				'label' => esc_html__( 'Footer Text', 'edc-2015' ),
+				'section' => 'footer_options',
+				'settings' => 'footer_text',
+				'type' => 'textarea'
+			)
+		);
+		$wp_customize->get_setting( 'footer_text' )->transport = 'postMessage';
+
+		// Footer Owner Field
+		$wp_customize->add_setting(
+			'footer_owner',
+			array(
+				'default'  	=> '',
+				'transport' => 'postMessage'
+			)
+		);
+		$wp_customize->add_control(
+			'footer_owner',
+			array(
+				'description' 	=> esc_html__( 'The text in the footer used in the copyright notice.', 'edc-2015' ),
+				'label' => esc_html__( 'Footer Owner Text', 'edc-2015' ),
+				'section' => 'footer_options',
+				'settings' => 'footer_owner',
+				'type' => 'text'
+			)
+		);
+		$wp_customize->get_setting( 'footer_owner' )->transport = 'postMessage';
+
+		// Footer Address Field
+		$wp_customize->add_setting(
+			'footer_address',
+			array(
+				'default'  	=> '',
+				'transport' => 'postMessage'
+			)
+		);
+		$wp_customize->add_control(
+			'footer_address',
+			array(
+				'description' 	=> esc_html__( 'The address in the site footer.', 'edc-2015' ),
+				'label' => esc_html__( 'Footer Address', 'edc-2015' ),
+				'section' => 'footer_options',
+				'settings' => 'footer_address',
+				'type' => 'text'
+			)
+		);
+		$wp_customize->get_setting( 'footer_address' )->transport = 'postMessage';
+
+		// Footer Phone Number Field
+		$wp_customize->add_setting(
+			'footer_phone',
+			array(
+				'default'  	=> '',
+				'transport' => 'postMessage'
+			)
+		);
+		$wp_customize->add_control(
+			'footer_phone',
+			array(
+				'description' 	=> esc_html__( 'The phone number in the site footer.', 'edc-2015' ),
+				'label' => esc_html__( 'Footer Phone Number', 'edc-2015' ),
+				'section' => 'footer_options',
+				'settings' => 'footer_phone',
+				'type' => 'text'
+			)
+		);
+		$wp_customize->get_setting( 'footer_phone' )->transport = 'postMessage';
 
 /*
 		// Theme Options Panel
@@ -85,8 +319,8 @@ class edc_2015_Customize {
 		$wp_customize->add_control(
 			'text_field',
 			array(
-				'description' 	=> esc_html__( '', 'mip-2015' ),
-				'label'  	=> esc_html__( 'Text Field', 'mip-2015' ),
+				'description' 	=> esc_html__( '', 'edc-2015' ),
+				'label'  	=> esc_html__( 'Text Field', 'edc-2015' ),
 				'section'  	=> 'new_section',
 				'settings' 	=> 'text_field',
 				'type' 		=> 'text'
@@ -107,8 +341,8 @@ class edc_2015_Customize {
 		$wp_customize->add_control(
 			'url_field',
 			array(
-				'description' 	=> esc_html__( '', 'mip-2015' ),
-				'label' => esc_html__( 'URL Field', 'mip-2015' ),
+				'description' 	=> esc_html__( '', 'edc-2015' ),
+				'label' => esc_html__( 'URL Field', 'edc-2015' ),
 				'section' => 'new_section',
 				'settings' => 'url_field',
 				'type' => 'url'
@@ -129,8 +363,8 @@ class edc_2015_Customize {
 		$wp_customize->add_control(
 			'email_field',
 			array(
-				'description' 	=> esc_html__( '', 'mip-2015' ),
-				'label' => esc_html__( 'Email Field', 'mip-2015' ),
+				'description' 	=> esc_html__( '', 'edc-2015' ),
+				'label' => esc_html__( 'Email Field', 'edc-2015' ),
 				'section' => 'new_section',
 				'settings' => 'email_field',
 				'type' => 'email'
@@ -149,8 +383,8 @@ class edc_2015_Customize {
 		$wp_customize->add_control(
 			'date_field',
 			array(
-				'description' 	=> esc_html__( '', 'mip-2015' ),
-				'label' => esc_html__( 'Date Field', 'mip-2015' ),
+				'description' 	=> esc_html__( '', 'edc-2015' ),
+				'label' => esc_html__( 'Date Field', 'edc-2015' ),
 				'section' => 'new_section',
 				'settings' => 'date_field',
 				'type' => 'date'
@@ -170,8 +404,8 @@ class edc_2015_Customize {
 		$wp_customize->add_control(
 			'checkbox_field',
 			array(
-				'description' 	=> esc_html__( '', 'mip-2015' ),
-				'label' => esc_html__( 'Checkbox Field', 'mip-2015' ),
+				'description' 	=> esc_html__( '', 'edc-2015' ),
+				'label' => esc_html__( 'Checkbox Field', 'edc-2015' ),
 				'section' => 'new_section',
 				'settings' => 'checkbox_field',
 				'type' => 'checkbox'
@@ -193,8 +427,8 @@ class edc_2015_Customize {
 		$wp_customize->add_control(
 			'password_field',
 			array(
-				'description' 	=> esc_html__( '', 'mip-2015' ),
-				'label' => esc_html__( 'Password Field', 'mip-2015' ),
+				'description' 	=> esc_html__( '', 'edc-2015' ),
+				'label' => esc_html__( 'Password Field', 'edc-2015' ),
 				'section' => 'new_section',
 				'settings' => 'password_field',
 				'type' => 'password'
@@ -216,12 +450,12 @@ class edc_2015_Customize {
 			'radio_field',
 			array(
 				'choices' => array(
-					'choice1' => esc_html__( 'Choice 1', 'mip-2015' ),
-					'choice2' => esc_html__( 'Choice 2', 'mip-2015' ),
-					'choice3' => esc_html__( 'Choice 3', 'mip-2015' )
+					'choice1' => esc_html__( 'Choice 1', 'edc-2015' ),
+					'choice2' => esc_html__( 'Choice 2', 'edc-2015' ),
+					'choice3' => esc_html__( 'Choice 3', 'edc-2015' )
 				),
-				'description' 	=> esc_html__( '', 'mip-2015' ),
-				'label' => esc_html__( 'Radio Field', 'mip-2015' ),
+				'description' 	=> esc_html__( '', 'edc-2015' ),
+				'label' => esc_html__( 'Radio Field', 'edc-2015' ),
 				'section' => 'new_section',
 				'settings' => 'radio_field',
 				'type' => 'radio'
@@ -243,12 +477,12 @@ class edc_2015_Customize {
 			'select_field',
 			array(
 				'choices' => array(
-					'choice1' => esc_html__( 'Choice 1', 'mip-2015' ),
-					'choice2' => esc_html__( 'Choice 2', 'mip-2015' ),
-					'choice3' => esc_html__( 'Choice 3', 'mip-2015' )
+					'choice1' => esc_html__( 'Choice 1', 'edc-2015' ),
+					'choice2' => esc_html__( 'Choice 2', 'edc-2015' ),
+					'choice3' => esc_html__( 'Choice 3', 'edc-2015' )
 				),
-				'description' 	=> esc_html__( '', 'mip-2015' ),
-				'label' => esc_html__( 'Select Field', 'mip-2015' ),
+				'description' 	=> esc_html__( '', 'edc-2015' ),
+				'label' => esc_html__( 'Select Field', 'edc-2015' ),
 				'section' => 'new_section',
 				'settings' => 'select_field',
 				'type' => 'select'
@@ -269,8 +503,8 @@ class edc_2015_Customize {
 		$wp_customize->add_control(
 			'textarea_field',
 			array(
-				'description' 	=> esc_html__( '', 'mip-2015' ),
-				'label' => esc_html__( 'Textarea Field', 'mip-2015' ),
+				'description' 	=> esc_html__( '', 'edc-2015' ),
+				'label' => esc_html__( 'Textarea Field', 'edc-2015' ),
 				'section' => 'new_section',
 				'settings' => 'textarea_field',
 				'type' => 'textarea'
@@ -291,7 +525,7 @@ class edc_2015_Customize {
 		$wp_customize->add_control(
 			'range_field',
 			array(
-				'description' 	=> esc_html__( '', 'mip-2015' ),
+				'description' 	=> esc_html__( '', 'edc-2015' ),
 				'input_attrs' => array(
 					'class' => 'range-field',
 					'max' => 100,
@@ -299,7 +533,7 @@ class edc_2015_Customize {
 					'step' => 1,
 					'style' => 'color: #020202'
 				),
-				'label' => esc_html__( 'Range Field', 'mip-2015' ),
+				'label' => esc_html__( 'Range Field', 'edc-2015' ),
 				'section' => 'new_section',
 				'settings' => 'range_field',
 				'type' => 'range'
@@ -320,8 +554,8 @@ class edc_2015_Customize {
 		$wp_customize->add_control(
 			'select_page_field',
 			array(
-				'description' 	=> esc_html__( '', 'mip-2015' ),
-				'label' => esc_html__( 'Select Page', 'mip-2015' ),
+				'description' 	=> esc_html__( '', 'edc-2015' ),
+				'label' => esc_html__( 'Select Page', 'edc-2015' ),
 				'section' => 'new_section',
 				'settings' => 'select_page_field',
 				'type' => 'dropdown-pages'
@@ -344,8 +578,8 @@ class edc_2015_Customize {
 				$wp_customize,
 				'color_field',
 				array(
-					'description' 	=> esc_html__( '', 'mip-2015' ),
-					'label' => esc_html__( 'Color Field', 'mip-2015' ),
+					'description' 	=> esc_html__( '', 'edc-2015' ),
+					'label' => esc_html__( 'Color Field', 'edc-2015' ),
 					'section' => 'new_section',
 					'settings' => 'color_field'
 				),
@@ -362,8 +596,8 @@ class edc_2015_Customize {
 				$wp_customize,
 				'file_upload',
 				array(
-					'description' 	=> esc_html__( '', 'mip-2015' ),
-					'label' => esc_html__( 'File Upload', 'mip-2015' ),
+					'description' 	=> esc_html__( '', 'edc-2015' ),
+					'label' => esc_html__( 'File Upload', 'edc-2015' ),
 					'section' => 'new_section',
 					'settings' => 'file_upload'
 				),
@@ -385,8 +619,8 @@ class edc_2015_Customize {
 				$wp_customize,
 				'image_upload',
 				array(
-					'description' 	=> esc_html__( '', 'mip-2015' ),
-					'label' => esc_html__( 'Image Field', 'mip-2015' ),
+					'description' 	=> esc_html__( '', 'edc-2015' ),
+					'label' => esc_html__( 'Image Field', 'edc-2015' ),
 					'section' => 'new_section',
 					'settings' => 'image_upload'
 				)
@@ -400,11 +634,6 @@ class edc_2015_Customize {
 		$wp_customize->get_setting( 'blogname' )->transport 		= 'postMessage';
 		$wp_customize->get_setting( 'blogdescription' )->transport 	= 'postMessage';
 		$wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage';
-		$wp_customize->get_setting( 'text_field' )->transport 		= 'postMessage';
-		$wp_customize->get_setting( 'url_field' )->transport 		= 'postMessage';
-		$wp_customize->get_setting( 'email_field' )->transport 		= 'postMessage';
-		$wp_customize->get_setting( 'date_field' )->transport 		= 'postMessage';
-		$wp_customize->get_setting( 'checkbox_field' )->transport 	= 'postMessage';
 
 	} // register()
 

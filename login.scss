@@ -2,10 +2,8 @@
  * Custom styling for the login form page
  */
 
-@import "sass/variables-site/variables-site";
-@import "sass/mixins/mixins-master";
-@import "sass/mixins/mixins-slushman";
-@import "sass/mixins/mixins-theme";
+@import "sass/variables-site/*";
+@import "sass/mixins/*";
 
 .login { // page body tag
 	background: $light;

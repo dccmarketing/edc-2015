@@ -9,6 +9,8 @@
  * @package EDC 2015
  */
 
+global $edc_2015_themekit;
+
 ?><!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -30,28 +32,27 @@ do_action( 'after_body' );
 
 	<header id="masthead" class="site-header" role="banner">
 		<div class="wrap wrap-header">
-			<div class="site-branding"><?php
+			<div class="site-branding">
+				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
+					<div class="site-logo"><?php
 
-			if ( is_front_page() && is_home() ) {
+						$info = $edc_2015_themekit->get_customizer_image_info( 'site_logo' );
 
-				?><h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1><?php
-
-			} else {
-
-				?><p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p><?php
-
-			}
-
-				?><p class="site-description"><?php bloginfo( 'description' ); ?></p>
+						?><img alt="<?php echo $info['alt']; ?>" class="logo" src="<?php echo $info['url']; ?>">
+					</div>
+				</a>
 			</div><!-- .site-branding -->
+			<div class="header-menus"><?php
 
-			<nav id="site-navigation" class="main-navigation" role="navigation">
-				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Menu', 'edc-2015' ); ?></button><?php
+				get_template_part( 'menus/menu', 'topheader' );
 
-					wp_nav_menu( array( 'theme_location' => 'primary', 'menu_id' => 'primary-menu' ) );
+				get_template_part( 'menus/menu', 'main' );
 
-			?></nav><!-- #site-navigation -->
-		</div><!-- .header_wrap -->
+			?></div><!-- .header-menus --><?php
+
+			//get_template_part( 'menus/menu', 'social' );
+
+		?></div><!-- .header_wrap -->
 	</header><!-- #masthead --><?php
 
 	do_action( 'after_header' );

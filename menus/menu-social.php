@@ -1,14 +1,17 @@
-<?php if ( has_nav_menu( 'social' ) ) {
+<div class="wrap-social-menu"><?php
 
-	$menu['theme_location']		= 'social';
-	$menu['container'] 			= 'div';
-	$menu['container_id']    	= 'menu-social-media';
-	$menu['container_class'] 	= 'menu nav-social';
-	$menu['menu_id']         	= 'menu-social-media-items';
-	$menu['menu_class']      	= 'menu-items';
-	$menu['depth']           	= 1;
-	$menu['fallback_cb']     	= '';
+	if ( has_nav_menu( 'social' ) ) {
 
-	wp_nav_menu( $menu );
+		$menu['container_class'] 	= 'menu nav-social';
+		$menu['container_id']    	= 'menu-social-media';
+		$menu['depth']           	= 1;
+		$menu['fallback_cb']     	= FALSE;
+		$menu['menu_class']      	= 'menu-items';
+		$menu['menu_id']         	= 'menu-social-media-items';
+		$menu['theme_location']		= 'social';
 
-}
+		wp_nav_menu( $menu );
+
+	}
+
+?></div>

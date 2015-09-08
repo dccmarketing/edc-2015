@@ -1,0 +1,80 @@
+#soliloquy-169 {
+
+	.soliloquy-caption {
+		top: 200px;
+
+		.soliloquy-caption-inside {
+			background 		: transparent !important;
+			bottom 			: 0;
+			font-weight 	: 700;
+			margin 			: 0 auto;
+			max-width 		: $size__max-width;
+			padding 		: 0 !important;
+
+			.title {
+				font-size 		: 75px;
+				text-align 		: right;
+				text-shadow 	: 2px 2px 0 rgba( $dark, 0.75 );
+				text-transform	: uppercase;
+			}
+
+			.subtitle {
+				font-size 		: 38px;
+				text-align 		: right;
+				text-shadow 	: 2px 2px 0 rgba( $dark, 0.75 );
+				text-transform	: uppercase;
+			}
+
+			.section {
+				background-color: $gray;
+				bottom 			: 0;
+				font-style 		: oblique;
+				max-width 		: $size__max-width;
+				padding 		: 2em 1em 0;
+				position 		: absolute;
+				width 			: 100%;
+
+				.line1 {
+					font-size 		: 40px;
+					text-align 		: left;
+					text-transform	: uppercase;
+				}
+
+				.line2 {
+					font-size 		: 25px;
+					text-align 		: left;
+					font-weight 	: 400;
+				}
+
+				.btn-more {
+					background-color: $teal;
+					color 			: $light;
+					display 		: block;
+					font-size 		: 20px;
+					margin 			: 1.5em auto 0;
+					padding 		: 1em;
+					text-transform	: uppercase;
+					width 			: 225px;
+
+					&:after {
+						content 	: "-";
+						margin-left : 0.5em;
+					}
+
+					&:before {
+						content 	: "-";
+						margin-right: 0.5em;
+					}
+				}
+			}
+		}
+	}
+}
+
+.soliloquy-outer-container {
+	display: none;
+
+	@media only screen and (min-width: $bp__tablet) {
+		display: block;
+	}
+}

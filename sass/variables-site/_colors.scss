@@ -2,14 +2,20 @@ $light	: #fff;
 $med	: #ccc;
 $dark	: #020202;
 
+$teal 	: #0097b8;
+$gray 	: #6d6e71;
+$ltgray : #f6f6f6;
+
+$transteal: rgba( $teal, 0.9 );
+
 // Backgrounds
 $color__background-body		: $light;
-$color__background-screen	: #f1f1f1;
-$color__background-hr		: $med;
-$color__background-pre		: $med;
-$color__background-ins		: #fff9c0;
-$color__bg-input 			: $med;
-$color__background-button	: $med;
+$color__background-screen	: $light;
+$color__background-hr		: $gray;
+$color__background-pre		: $gray;
+$color__background-ins		: $teal;
+$color__bg-input 			: $gray;
+$color__background-button	: $gray;
 $color__bg-button-hover 	: lighten( $color__background-button, 10% );
 $color__bg-button-focus 	: darken( $color__background-button, 10% );
 
@@ -17,52 +23,59 @@ $color__bg-button-focus 	: darken( $color__background-button, 10% );
 $color__text-screen			: #21759b;
 $color__text-input			: $dark;
 $color__text-input-focus	: $dark;
-$color__link				: royalblue;
-$color__link-visited		: purple;
-$color__link-hover			: midnightblue;
-$color__text-main			: #404040;
+$color__link				: $teal;
+$color__link-visited		: $teal;
+$color__link-hover			: $teal;
+$color__text-main			: $gray;
 $color__text-social 		: $light;
 $color__text-ins 			: $dark;
 $color__text-button 		: rgba(0, 0, 0, .8);
 $color__text-button-hover 	: $light;
 $color__text-button-focus 	: $light;
-$color__text-site-title 	: $dark;
+$color__text-site-title 	: $light;
 
 // Border colors
-$color__border-button		: $med $med #bbb;
-$color__border-button-hover	: $med #bbb #aaa;
+$color__border-button		: $gray $gray #bbb;
+$color__border-button-hover	: $gray #bbb #aaa;
 $color__border-button-focus	: #aaa #bbb #bbb;
-$color__border-input		: $med;
-$color__border-input-focus 	: $med;
-$color__outline 			: $med;
+$color__border-input		: $gray;
+$color__border-input-focus 	: $gray;
+$color__outline 			: $gray;
 $color__border-abbr			: #666;
-$color__outline-menu-link 	: $med;
+$color__outline-menu-link 	: $gray;
 
 // Shadow colors
-$color__shadow-button-text 			: rgba(255, 255, 255, 0.8);
-$color__shadow-button-inner 		: rgba(255, 255, 255, 0.5);
-$color__shadow-button-inner-2 		: rgba(0, 0, 0, 0.05);
-$color__shadow-button-inner-hover 	: rgba(255, 255, 255, 0.8);
-$color__shadow-button-inner-2-hover : rgba(0, 0, 0, 0.02);
-$color__shadow-button-inner-focus 	: rgba(255, 255, 255, 0.5);
-$color__shadow-button-inner-2-focus : rgba(0, 0, 0, 0.15);
+$color__shadow-button-text 			: rgba($light, 0.8);
+$color__shadow-button-inner 		: rgba($light, 0.5);
+$color__shadow-button-inner-2 		: rgba($dark, 0.05);
+$color__shadow-button-inner-hover 	: rgba($light, 0.8);
+$color__shadow-button-inner-2-hover : rgba($dark, 0.02);
+$color__shadow-button-inner-focus 	: rgba($light, 0.5);
+$color__shadow-button-inner-2-focus : rgba($dark, 0.15);
 
 // Menu colors
-$color__bg-menu-button			: $med;
-$color__bg-menu-button-mobile 	: $med;
+$color__bg-menu-button			: $gray;
+$color__bg-menu-button-mobile 	: $gray;
 $color__bg-menu-button-pseudo 	: $color__bg-menu-button-mobile;
-$color__bg-menu-item			: $med;
-$color__bg-menu-item-mobile		: $med;
+$color__bg-menu-item			: $teal;
+$color__bg-menu-item-mobile		: $teal;
 $color__bg-menu-current			: darken( $color__bg-menu-item, 25% );
 $color__bg-menu-current-hover	: darken( $color__bg-menu-item, 25% );
 
 $color__text-menu				: $dark;
 $color__text-menu-hover			: darken( $color__text-menu, 25% );
 $color__text-menu-mobile		: $light;
-$color__text-menu-mobile-hover 	: $dark;
+$color__text-menu-mobile-hover 	: $light;
 $color__text-menu-button		: $light;
 $color__text-menu-button-mobile : $light;
-$color__text-menu-button-pseudo : $color__text-menu-button-mobile;
+$color__text-menu-button-pseudo : darken( $light, 10% );
 $color__text-menu-current		: $light;
-$color__text-menu-current-hover	: $med;
+$color__text-menu-current-hover	: lighten( $gray, 10% );
 $color__text-submenu			: $light;
+
+// Search Colors
+$color__bg-search-container 	: $teal;
+$color__bg-search-field 		: $light;
+$color__bg-search-btn-hover 	: $gray;
+$color__border-search-btn 		: $gray;
+$color__text-search-field 		: $gray;

@@ -15,12 +15,10 @@ class edc_2015_Themekit {
 
 		$this->loader();
 
-	}
+	} // __construct()
 
 	/**
 	 * Loads all filter and action calls
-	 *
-	 * @return [type] [description]
 	 */
 	private function loader() {
 
@@ -34,22 +32,32 @@ class edc_2015_Themekit {
 		add_filter( 'upload_mimes', array( $this, 'custom_upload_mimes' ) );
 		add_filter( 'body_class', array( $this, 'page_body_classes' ) );
 		//add_action( 'wp_head', array( $this, 'background_images' ) );
-		add_action( 'wp_head', array( $this, 'add_favicons' ) );
 		add_filter( 'excerpt_length', array( $this, 'excerpt_length' ) );
 		add_filter( 'excerpt_more', array( $this, 'excerpt_read_more' ) );
 		add_filter( 'mce_buttons_2', array( $this, 'add_editor_buttons' ) );
 		add_action( 'edc_2015_breadcrumbs', array( $this, 'breadcrumbs' ) );
+		add_filter( 'wpseo_breadcrumb_single_link', array( $this, 'unlink_private_pages' ), 10, 2 );
+		add_filter( 'wp_seo_get_bc_title', array( $this, 'remove_private' ) );
+		add_action( 'after_body', array( $this, 'add_hidden_search' ) );
+		add_action( 'after_header', array( $this, 'after_header' ) );
+		add_action( 'after_content', array( $this, 'after_content' ) );
+		add_filter( 'get_search_form', array( $this, 'make_search_button_a_button' ) );
+		add_action( 'after_body', array( $this, 'add_slider' ) );
 
 	} // loader()
 
 	/**
 	 * Additional theme setup
-	 * @return 	void
+	 *
+	 * @hook 		after_setup_theme
 	 */
 	public function more_setup() {
 
 		register_nav_menus( array(
-			'social' => esc_html__( 'Social Links', 'edc-2015' )
+			'footer' => esc_html__( 'Footer Menu', 'edc-2015' ),
+			'sites' => esc_html__( 'Site Selections', 'edc-2015' ),
+			'social' => esc_html__( 'Social Links', 'edc-2015' ),
+			'top-header' => esc_html__( 'Top Header', 'edc-2015' )
 		) );
 
 		add_theme_support( 'yoast-seo-breadcrumbs' );
@@ -58,6 +66,8 @@ class edc_2015_Themekit {
 
 	/**
 	 * Enqueues scripts and styles for the admin
+	 *
+	 * @hook 		admin_enqueue_scripts
 	 */
 	public function admin_scripts_and_styles() {
 
@@ -68,11 +78,14 @@ class edc_2015_Themekit {
 	/**
 	 * Enqueues additional scripts and styles
 	 *
-	 * @return 	void
+	 * @hook 		wp_enqueue_scripts
 	 */
 	public function more_scripts_and_styles() {
 
 		wp_enqueue_style( 'dashicons' );
+		wp_enqueue_script( 'edc-2015-search', get_template_directory_uri() . '/js/hidden-search.min.js', array(), '20150807', true );
+		wp_enqueue_script( 'enquire', '//cdnjs.cloudflare.com/ajax/libs/enquire.js/2.1.2/enquire.min.js', array(), '20150804', true );
+		wp_enqueue_script( 'edc-2015-menu-scripts', get_template_directory_uri() . '/js/menu-scripts.min.js', array( 'jquery', 'enquire' ), '20150904', true );
 		// wp_enqueue_style( 'edc-2015-fonts', fonts_url(), array(), null );
 
 	} // more_scripts_and_styles()
@@ -80,12 +93,11 @@ class edc_2015_Themekit {
 	/**
 	 * Enqueues scripts and styles for the login page
 	 *
-	 * @return 	void
+	 * @hook 		login_enqueue_scripts
 	 */
 	function login_scripts() {
 
 		wp_enqueue_style( 'edc-2015-login', get_stylesheet_directory_uri() . '/login.css', 10, 2 );
-		wp_enqueue_script( 'enquire', '//cdnjs.cloudflare.com/ajax/libs/enquire.js/2.1.2/enquire.min.js', array(), '20150804', true );
 
 	} // login_scripts()
 
@@ -94,6 +106,8 @@ class edc_2015_Themekit {
 
 	/**
 	 * Add core editor buttons that are disabled by default
+	 *
+	 * @hook 		mce_buttons_2
 	 */
 	function add_editor_buttons( $buttons ) {
 
@@ -105,44 +119,31 @@ class edc_2015_Themekit {
 	} // add_editor_buttons()
 
 	/**
-	 * Creates links to all favicons
+	 * Adds a hidden search field
 	 *
-	 * PUT THEM IN A "FAVICONS" FOLDER AT THE ROOT!
+	 * @hook 		after_body
 	 *
-	 * @link 	http://iconogen.com/
-	 * @return 	mixed 			HTML for favicon links
+	 * @return 		mixed 			The HTML markup for a search field
 	 */
-	public function add_favicons() {
+	public function add_hidden_search() {
 
-		?><link rel="shortcut icon" href="/favicons/favicon.ico" type="image/x-icon" />
+		?><div aria-hidden="true" class="hidden-search-top" id="hidden-search-top">
+			<div class="wrap"><?php
 
-		<link rel="apple-touch-icon" sizes="57x57" href="/favicons/apple-touch-icon-57x57.png">
-		<link rel="apple-touch-icon" sizes="60x60" href="/favicons/apple-touch-icon-60x60.png">
-		<link rel="apple-touch-icon" sizes="72x72" href="/favicons/apple-touch-icon-72x72.png">
-		<link rel="apple-touch-icon" sizes="76x76" href="/favicons/apple-touch-icon-76x76.png">
-		<link rel="apple-touch-icon" sizes="114x114" href="/favicons/apple-touch-icon-114x114.png">
-		<link rel="apple-touch-icon" sizes="120x120" href="/favicons/apple-touch-icon-120x120.png">
-		<link rel="apple-touch-icon" sizes="144x144" href="/favicons/apple-touch-icon-144x144.png">
-		<link rel="apple-touch-icon" sizes="152x152" href="/favicons/apple-touch-icon-152x152.png">
-		<link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon-180x180.png">
+			get_search_form();
 
-		<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
-		<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
-		<link rel="icon" type="image/png" href="/favicons/favicon-96x96.png" sizes="96x96">
-		<link rel="icon" type="image/png" href="/favicons/android-chrome-192x192.png" sizes="192x192">
+			?></div>
+		</div><?php
 
-		<meta name="msapplication-square70x70logo" content="/favicons/smalltile.png" />
-		<meta name="msapplication-square150x150logo" content="/favicons/mediumtile.png" />
-		<meta name="msapplication-wide310x150logo" content="/favicons/widetile.png" />
-		<meta name="msapplication-square310x310logo" content="/favicons/largetile.png" /><?php
-
-	} // add_favicons()
+	} // add_hidden_search()
 
 	/**
 	 * Adds PDF as a filter for the Media Library
 	 *
-	 * @param 	array 		$post_mime_types 		The current MIME types
-	 * @return 	array 								The modified MIME types
+	 * @hook 		post_mime_types
+	 *
+	 * @param 		array 		$post_mime_types 		The current MIME types
+	 * @return 		array 								The modified MIME types
 	 */
 	public function add_mime_types( $post_mime_types ) {
 
@@ -154,8 +155,66 @@ class edc_2015_Themekit {
 	} // add_mime_types
 
 	/**
+	 * Inserts content after the main content and before the footer.
+	 *
+	 * @hook 		after_content
+	 */
+	public function after_content() {
+
+		if ( is_front_page() ) {
+
+			do_action( 'woothemes_testimonials', array( 'limit' => 1, 'order' => 'DESC', 'orderby' => 'date' ) );
+
+		} elseif ( ! is_front_page() || ! is_home() ) {
+
+			get_template_part( 'menus/menu', 'footer' );
+
+		}
+
+	} // after_content()
+
+	/**
+	 * Inserts content after the header and before the main content.
+	 *
+	 * @hook 		after_header
+	 */
+	public function after_header() {
+
+		get_template_part( 'menus/menu', 'social' );
+
+		if ( ! is_front_page() || ! is_home() ) {
+
+			get_template_part( 'template-parts/content', 'afterheader' );
+
+		}
+
+	} // after_header()
+
+	/**
+	 * Adds a slider to the front page
+	 *
+	 * @hook 		after_header
+	 */
+	public function add_slider() {
+
+		if ( is_front_page() ) {
+
+			if ( function_exists( 'soliloquy' ) ) {
+
+				soliloquy( 'home', 'slug' );
+
+			}
+
+		}
+
+	} // add_slider()
+
+	/**
 	 * Inserts Google Tag manager code after body tag
-	 * @return 	mixed 		The inserted Google Tag Manager code
+	 *
+	 * @hook 		after_body
+	 *
+	 * @return 		mixed 		The inserted Google Tag Manager code
 	 */
 	public function analytics_code() { ?>
 
@@ -165,6 +224,8 @@ class edc_2015_Themekit {
 
 	/**
 	 * Creates a style tag in the header with the background image
+	 *
+	 * @hook 		wp_head
 	 *
 	 * @return 		void
 	 */
@@ -194,6 +255,8 @@ class edc_2015_Themekit {
 	/**
 	 * Returns the appropriate breadcrumbs.
 	 *
+	 * @hook 		edc_2015_breadcrumbs
+	 *
 	 * @return 		mixed 				WooCommerce breadcrumbs, then Yoast breadcrumbs
 	 */
 	public function breadcrumbs() {
@@ -222,9 +285,12 @@ class edc_2015_Themekit {
 	} // breadcrumbs()
 
 	/**
-	 * [custom_upload_mimes description]
-	 * @param  array  $existing_mimes [description]
-	 * @return [type]                 [description]
+	 * Adds support for additional MIME types to WordPress
+	 *
+	 * @hook 		upload_mimes
+	 *
+	 * @param 		array 		$existing_mimes 			The existing MIME types
+	 * @return 		array 									The modified MIME types
 	 */
 	public function custom_upload_mimes( $existing_mimes = array() ) {
 
@@ -237,6 +303,8 @@ class edc_2015_Themekit {
 
 	/**
 	 * Removes WordPress emoji support everywhere
+	 *
+	 * @hook 		init
 	 */
 	function disable_emojis() {
 
@@ -253,8 +321,10 @@ class edc_2015_Themekit {
 	/**
 	 * Limits excerpt length
 	 *
-	 * @param 	int 		$length 			The current word length of the excerpt
-	 * @return 	int 							The word length of the excerpt
+	 * @hook 		excerpt_length
+	 *
+	 * @param 		int 		$length 			The current word length of the excerpt
+	 * @return 		int 							The word length of the excerpt
 	 */
 	public function excerpt_length( $length ) {
 
@@ -271,9 +341,11 @@ class edc_2015_Themekit {
 	/**
 	 * Customizes the "Read More" text for excerpts
 	 *
-	 * @global   			$post 		The post object
-	 * @param 	mixed 		$more 		The current "read more"
-	 * @return 	mixed 					The modifed "read more"
+	 * @hook 		excerpt_more
+	 *
+	 * @global   					$post 		The post object
+	 * @param 		mixed 			$more 		The current "read more"
+	 * @return 		mixed 						The modifed "read more"
 	 */
 	public function excerpt_read_more( $more ) {
 
@@ -292,7 +364,8 @@ class edc_2015_Themekit {
 	/**
 	 * Properly encode a font URLs to enqueue a Google font
 	 *
-	 * @return 	mixed 		A properly formatted, translated URL for a Google font
+	 * @see 		more_scripts_and_styles
+	 * @return 		mixed 		A properly formatted, translated URL for a Google font
 	 */
 	public function fonts_url() {
 
@@ -321,10 +394,33 @@ class edc_2015_Themekit {
 	} // fonts_url()
 
 	/**
+	 * Returns an array of image info from the image URL
+	 *
+	 * @param 		string 		$name 				The name of the customizer image field
+	 * @return 		array 							The image info array
+	 */
+	public function get_customizer_image_info( $name ) {
+
+		if ( empty( $name ) ) { return FALSE; }
+
+		$image_url = get_theme_mod( $name );
+
+		if ( empty( $image_url ) ) { return FALSE; }
+
+		$id = $this->get_image_id( $image_url );
+
+		if ( empty( $id ) ) { return FALSE; }
+
+		$info = wp_prepare_attachment_for_js( $id );
+
+		return $info;
+
+	} // get_customizer_image_info()
+
+	/**
 	 * Returns an array of the featured image details
 	 *
 	 * @param 	int 	$postID 		The post ID
-	 *
 	 * @return 	array 					Array of info about the featured image
 	 */
 	public function get_featured_images( $postID ) {
@@ -338,6 +434,29 @@ class edc_2015_Themekit {
 		return wp_prepare_attachment_for_js( $imageID );
 
 	} // get_featured_images()
+
+	/**
+	 * Returns the attachment ID from the file URL
+	 *
+	 * @link 	https://pippinsplugins.com/retrieve-attachment-id-from-image-url/
+	 * @param 	string 		$image_url 			The URL of the image
+	 * @return 	int 							The image ID
+	 */
+	public function get_image_id( $image_url ) {
+
+		if ( empty( $image_url ) ) { return FALSE; }
+
+		global $wpdb;
+
+		$attachment = $wpdb->get_col(
+						$wpdb->prepare(
+							"SELECT ID FROM $wpdb->posts WHERE guid='%s';", $image_url
+						)
+					);
+
+        return $attachment[0];
+
+	} // get_image_id()
 
 	/**
 	 * Returns a post object of the requested post type
@@ -396,6 +515,25 @@ class edc_2015_Themekit {
 	} // get_posts()
 
 	/**
+	 * Returns the URL for the posts page
+	 *
+	 * @return 		string 						The URL for the posts page
+	 */
+	public function get_posts_page() {
+
+		if( get_option( 'show_on_front' ) == 'page' ) {
+
+			return get_permalink( get_option( 'page_for_posts' ) );
+
+		} else  {
+
+			return bloginfo( 'url' );
+
+		}
+
+	} // get_posts_page()
+
+	/**
 	 * Returns the requested SVG
 	 *
 	 * @param 	string 		$svg 		The name of the icon to return
@@ -429,7 +567,7 @@ class edc_2015_Themekit {
 			case 'phone' 			: $output .= '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="phone"><path d="M12.06 6l-.21-.2q-.26-.27-.32-.47t.035-.38.365-.45l2.72-2.75q.11-.11.275-.285t.235-.245.19-.175.185-.12.17-.035.195.03.21.13.27.22l.21.2zm.53.45l4.4-4.4q.21.28.415.595t.47.78.45.95.31 1 .1 1.04-.215.975q-.33.76-.59 1.175t-.695.93-.715.895q-2.26 2.57-6 6.07-.41.29-.9.725t-.915.705-1.185.57q-.43.17-.95.18t-1.035-.125T4.53 18.2t-.97-.445-.8-.455-.62-.4l4.4-4.4 1.18 1.62q.16.23.485.165t.66-.285.655-.54l.925-.93 1.18-1.185 1.045-1.065.85-.89q.32-.32.535-.65t.29-.655-.165-.495zM1.57 16.5l-.21-.21q-.15-.16-.235-.28t-.095-.245-.01-.195.11-.21.17-.205.27-.265.31-.3l2.74-2.72q.41-.39.635-.425t.635.315l.2.21z"/></svg>'; break;
 			case 'pinterest' 		: $output .= '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="pinterest"><path d="M10.5.1c3.7 0 7.1 2.6 7.1 6.5 0 3.7-1.9 7.8-6.1 7.8-1 0-2.2-.5-2.7-1.4-.9 3.6-.8 4.1-2.8 6.8l-.2.1-.1-.1c-.1-.7-.2-1.5-.2-2.2 0-2.4 1.1-5.9 1.7-8.3-.3-.6-.4-1.3-.4-2 0-1.2.8-2.7 2.2-2.7 1 0 1.5.8 1.5 1.7 0 1.5-1 3-1 4.5 0 1 .8 1.7 1.8 1.7 2.7 0 3.6-3.9 3.6-6 0-2.8-2-4.3-4.7-4.3C7 2.1 4.6 4.3 4.6 7.5c0 1.5.9 2.3.9 2.7 0 .3-.2 1.4-.6 1.4h-.2C3 11 2.4 8.8 2.4 7.2c0-4.4 4-7.1 8.1-7.1z"/></svg>'; break;
 			case 'pinterestsquare' 	: $output .= '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="pinterest-square"><path d="M19.9 3.8v12.3c0 2-1.7 3.7-3.7 3.7H6.9c.4-.6 1.1-1.6 1.4-2.7 0 0 .1-.4.7-2.7.3.7 1.3 1.2 2.4 1.2 3.1 0 5.3-2.9 5.3-6.7 0-2.9-2.5-5.6-6.2-5.6-4.6 0-7 3.3-7 6.1 0 1.7.6 3.2 2 3.7.2.1.4 0 .5-.2 0-.2.1-.6.2-.8.1-.2 0-.3-.1-.5-.4-.5-.6-1.1-.6-1.9C5.5 7.2 7.4 5 10.3 5c2.6 0 4.1 1.6 4.1 3.7 0 2.8-1.2 5.2-3.1 5.2-1 0-1.8-.8-1.5-1.9.3-1.2.9-2.6.9-3.5 0-.8-.4-1.5-1.3-1.5-1 0-1.9 1.1-1.9 2.5 0 0 0 .9.3 1.6-1.1 4.5-1.3 5.3-1.3 5.3-.3 1.2-.2 2.6-.1 3.3H3.8C1.8 19.7.1 18 .1 16V3.8C.1 1.8 1.8.1 3.8.1h12.3c2.1 0 3.8 1.7 3.8 3.7z"/></svg>'; break;
-			case 'reddit' 			: $output .= '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="reddit"><path d="M19.9 9.8c0-1.3-1-2.3-2.3-2.3-.6 0-1.1.2-1.5.6-1.5-1-3.5-1.6-5.7-1.7l1.1-3.7 3.3.7c0 1 .8 1.9 1.9 1.9s1.9-.8 1.9-1.9-.8-1.9-1.9-1.9c-.8 0-1.4.5-1.7 1.1L11.5 2c-.2 0-.4.1-.4.2L9.8 6.4c-2.2 0-4.4.6-6 1.7-.4-.4-.9-.6-1.5-.6C1 7.5 0 8.5 0 9.8c0 .8.4 1.5 1.1 1.9 0 .2-.1.4-.1.6 0 1.6.9 3.1 2.7 4.3 1.7 1.1 3.9 1.7 6.2 1.7 2.4 0 4.6-.6 6.2-1.7 1.7-1.1 2.7-2.6 2.7-4.3 0-.2 0-.4-.1-.6.8-.4 1.2-1.1 1.2-1.9zm-3.1-7.5c.6 0 1.2.5 1.2 1.2 0 .6-.5 1.2-1.2 1.2-.6 0-1.2-.5-1.2-1.2 0-.6.6-1.2 1.2-1.2zM.8 9.8c0-.9.7-1.6 1.6-1.6.3 0 .6.1.9.3-1 .7-1.6 1.6-2 2.5-.3-.3-.5-.7-.5-1.2zm9.2 7.9c-4.5 0-8.2-2.4-8.2-5.3V12c0-.2.1-.5.1-.7.4-.8.9-1.6 1.8-2.3.2-.1.4-.3.6-.4 1.4-.9 3.5-1.5 5.7-1.5s4.3.6 5.7 1.5c.2.1.4.3.6.4.8.6 1.4 1.4 1.7 2.3.1.2.1.5.1.7v.4c.1 2.9-3.6 5.3-8.1 5.3zm8.7-6.7c-.3-.9-1-1.8-1.9-2.5.2-.2.6-.3.9-.3.9 0 1.6.7 1.6 1.6-.1.5-.3.9-.6 1.2z"/><path d="M12.7 14.7c-.7.6-1.5.8-2.7.8-1.2 0-2-.2-2.7-.8-.2-.1-.4-.1-.5.1-.1.2-.1.4.1.5.8.7 1.8 1 3.2 1s2.4-.3 3.2-1c.2-.1.2-.4.1-.5-.3-.2-.5-.3-.7-.1zM8.4 11.3c0-.7-.6-1.3-1.4-1.3-.7 0-1.3.6-1.3 1.3 0 .7.6 1.3 1.3 1.3.8.1 1.4-.5 1.4-1.3zM13 10c-.7 0-1.3.6-1.3 1.3 0 .7.6 1.3 1.3 1.3.7 0 1.3-.6 1.3-1.3.1-.7-.5-1.3-1.3-1.3z"/></svg>'; break;
+			case 'reddit' 			: $output .= '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="reddit"><path d="M19.9 9.8c0-1.3-1-2.3-2.3-2.3-.6 0-1.1.2-1.5.6-1.5-1-3.5-1.6-5.7-1.7l1.1-3.7 3.3.7c0 1 .8 1.9 1.9 1.9s1.9-.8 1.9-1.9-.8-1.9-1.9-1.9c-.8 0-1.4.5-1.7 1.1L11.5 2c-.2 0-.4.1-.4.2L9.8 6.4c-2.2 0-4.4.6-6 1.7-.4-.4-.9-.6-1.5-.6C1 7.5 0 8.5 0 9.8c0 .8.4 1.5 1.1 1.9 0 .2-.1.4-.1.6 0 1.6.9 3.1 2.7 4.3 1.7 1.1 3.9 1.7 6.2 1.7 2.4 0 4.6-.6 6.2-1.7 1.7-1.1 2.7-2.6 2.7-4.3 0-.2 0-.4-.1-.6.8-.4 1.2-1.1 1.2-1.9zm-3.1-7.5c.6 0 1.2.5 1.2 1.2 0 .6-.5 1.2-1.2 1.2-.6 0-1.2-.5-1.2-1.2 0-.6.6-1.2 1.2-1.2zM.8 9.8c0-.9.7-1.6 1.6-1.6.3 0 .6.1.9.3-1 .7-1.6 1.6-2 2.5-.3-.3-.5-.7-.5-1.2zm9.2 7.9c-4.5 0-8.2-2.4-8.2-5.3V12c0-.2.1-.5.1-.7.4-.8.9-1.6 1.8-2.3.2-.1.4-.3.6-.4 1.4-.9 3.5-1.5 5.7-1.5s4.3.6 5.7 1.5c.2.1.4.3.6.4.8.6 1.4 1.4 1.7 2.3.1.2.1.5.1.7v.4c.1 2.9-3.6 5.3-8.1 5.3zm8.7-6.7c-.3-.9-1-1.8-1.9-2.5.2-.2.6-.3.9-.3.9 0 1.6.7 1.6 1.6-.1.5-.3.9-.6 1.2z"/><path d="M12.7 14.7c-.7.6-1.5.8-2.7.8-1.2 0-2-.2-2.7-.8-.2-.1-.4-.1-.5.1-.1.2-.1.4.1.5.8.7 1.8 1 3.2 1s2.4-.3 3.2-1c.2-.1.2-.4.1-.5-.3-.2-.5-.3-.7-.1zM8.4 11.3c0-.7-.6-1.3-1.4-1.3-.7 0-1.3.6-1.3 1.3 0 .7.6 1.3 1.3 1.3.8.1 1.4-.5 1.4-1.3zM13 10c-.7 0-1.3.6-1.3 1.3 0 .7.6 1.3 1.3 1.3.7 0 1.3-.6 1.3-1.3.1-.7-.5-1.3-1.3-1.3z"/></svg>'; break;
 			case 'rss' 				: $output .= '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="rss"><path d="M14.92 18H18q0-2.14-.575-4.18t-1.61-3.765-2.51-3.18-3.23-2.475-3.83-1.585T2 2.25v3.02q2.1 0 4.07.645t3.56 1.82 2.785 2.74 1.85 3.51T14.92 18zm-5.44 0h3.08q0-2.11-.84-4.035t-2.255-3.32-3.37-2.22T2 7.6v3.02q1.5 0 2.86.56t2.43 1.6q1.06 1.04 1.625 2.39T9.48 18zm-5.35-.02q.88 0 1.505-.61t.625-1.48q0-.86-.625-1.475T4.13 13.8t-1.505.615T2 15.89q0 .87.62 1.48t1.51.61z"/></svg>'; break;
 			case 'search' 			: $output .= '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="search"><path d="M12.14 4.18q1.39 1.39 1.58 3.345t-.86 3.545q.03.03.155.14t.205.17q.34.27.81.59.62.43.66.47.61.45.94.78.49.49.84 1 .36.5.59 1.04.22.55.18 1-.03.48-.36.81t-.81.36q-.49.03-.99-.19-.52-.21-1.04-.59-.51-.35-1-.84-.33-.33-.77-.93-.02-.03-.47-.66-.32-.46-.56-.78-.24-.3-.44-.5-1.54.83-3.34.57t-3.1-1.55q-1.6-1.61-1.6-3.895t1.6-3.885q1.06-1.06 2.475-1.435t2.83 0T12.14 4.18zm-1.41 6.36q1.02-1.03 1.02-2.475T10.73 5.59Q9.7 4.56 8.25 4.56T5.78 5.59Q4.75 6.62 4.75 8.065t1.03 2.475q1.02 1.03 2.47 1.03t2.48-1.03z"/></svg>'; break;
 			case 'slack' 			: $output .= '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="slack"><path d="M19.9 11c0 .8-.4 1.3-1.1 1.5l-2 .7.7 2c.1.2.1.4.1.6 0 .9-.8 1.7-1.7 1.7-.7 0-1.4-.5-1.7-1.2l-.7-2-3.7 1.3.7 1.9c.1.2.1.4.1.6 0 .9-.8 1.7-1.7 1.7-.7 0-1.4-.5-1.6-1.2l-.7-1.9-1.8.6c-.2.1-.4.1-.6.1-1 0-1.7-.7-1.7-1.7 0-.7.5-1.4 1.2-1.6l1.9-.6-1.4-3.7-1.9.6c-.2.1-.4.1-.6.1-1 0-1.7-.7-1.7-1.7 0-.7.5-1.4 1.2-1.6l1.9-.6-.6-1.9c0-.1-.1-.3-.1-.5 0-.9.8-1.7 1.7-1.7.7 0 1.4.5 1.6 1.2l.6 1.9L10 4.4l-.5-2c-.1-.2-.1-.4-.1-.6 0-.9.8-1.7 1.7-1.7.7 0 1.4.5 1.7 1.2l.6 1.9 1.9-.7c.2 0 .3-.1.5-.1.9 0 1.7.7 1.7 1.6 0 .7-.6 1.4-1.2 1.6l-1.9.6 1.2 3.8 1.9-.7c.2-.1.4-.1.5-.1 1.1.1 1.9.8 1.9 1.8zm-7.5.2l-1.2-3.7-3.7 1.2 1.2 3.7 3.7-1.2z"/></svg>'; break;
@@ -444,7 +582,14 @@ class edc_2015_Themekit {
 			case 'youtubesquare'	: $output .= '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="youtube-square"><path d="M19.9 16.2c0 2-1.7 3.7-3.7 3.7H3.8c-2 0-3.7-1.7-3.7-3.7V3.8C.1 1.8 1.8.1 3.8.1h12.4c2 0 3.7 1.7 3.7 3.7v12.4zm-3.1-6c-.2-.8-.8-1.3-1.5-1.4-1.8-.2-3.5-.2-5.3-.2-1.8 0-3.5 0-5.3.2-.7.1-1.4.6-1.5 1.4-.2 1.1-.3 2.2-.3 3.3 0 1.1 0 2.3.3 3.3.2.7.8 1.3 1.5 1.4 1.8.2 3.5.2 5.3.2s3.5 0 5.3-.2c.7-.1 1.4-.6 1.5-1.4.3-1.1.3-2.3.3-3.3 0-1.1 0-2.3-.3-3.3zm-9.8.9H6v5.4H5v-5.4H4v-.9h3v.9zm1.5-9.8h-1l-.6 2.5-.7-2.5h-1l.6 1.8c.3.9.5 1.6.6 2v2.6h1V5.1l1.1-3.8zm1 15.3h-.8v-.5c-.3.4-.7.6-1 .6-.3 0-.5-.1-.5-.4-.1-.1-.1-.4-.1-.7v-3.7h.8v3.8c0 .1.1.2.2.2.2 0 .3-.1.5-.4v-3.6h.9v4.7zm1.6-12.1c0-.5-.1-.9-.3-1.1-.2-.3-.6-.5-1-.5s-.8.2-1 .5c-.2.2-.3.6-.3 1.1v1.7c0 .5.1.9.3 1.1.2.3.6.5 1 .5s.8-.2 1-.5c.2-.2.3-.6.3-1.1V4.5zm-.9 1.9c0 .4-.1.7-.4.7-.3-.1-.4-.3-.4-.7v-2c0-.4.1-.7.4-.7.3 0 .4.2.4.7v2zm2.6 8.8c0 .4 0 .7-.1.9-.1.4-.3.5-.7.5-.3 0-.6-.2-.9-.5v.5h-.9v-6.3h.9v2.1c.3-.3.6-.5.9-.5.3 0 .6.2.7.5.1.2.1.5.1 1v1.8zm-.9-2c0-.4-.1-.6-.4-.6-.1 0-.3.1-.4.2v2.9c.1.1.3.2.4.2.2 0 .4-.2.4-.6v-2.1zm2.4-5.5V3h-.9v3.6c-.2.3-.4.4-.5.4-.1 0-.2-.1-.2-.2V3h-.9v3.8c0 .3 0 .6.1.7.1.2.3.3.6.3s.6-.2 1-.6v.5h.8zm1.7 7.4v.6c0 .2-.1.4-.2.5-.2.3-.6.5-1 .5-.5 0-.8-.2-1-.5-.2-.2-.3-.6-.3-1.1v-1.7c0-.5.1-.9.3-1.1.2-.3.6-.5 1-.5s.8.2 1 .5c.2.2.3.6.3 1.1v1h-1.7v.8c0 .4.1.7.4.7.2 0 .3-.1.4-.3V15h.8v.1zm-.8-1.4v-.4c0-.4-.1-.7-.4-.7s-.4.2-.4.7v.4h.8z"/></svg>'; break;
 
 			// Insert theme-specific SVGs
-			case 'logo' 			: $output .= ''; break;
+
+			case 'building' 		: $output .= '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="building"><path d="M18.1 15.6h-.5V15h.5v.6zm-.5-1.6h.5v.6h-.5V14zm-.2 1.6h-.6V15h.6v.6zm-.6-1.6h.6v.6h-.6V14zm-.2 1.7H16V15h.6v.7zM16 14h.6v.6H16V14zm.6-1v.6H16V13h.6zm-.6-1h.6v.6H16V12zm0-1.1l.6.1v.6H16v-.7zm-.1-1.5l-.9-.1V7.9l.9.1v1.4zm-.2 6.3h-.6V15h.6v.7zm-.6-1.7h.6v.6h-.6V14zm.6-1.1v.6h-.6v-.7c0 .1.6.1.6.1zm-.6-1h.6v.6h-.6v-.6zm-.1-1.1l.6.1v.6H15v-.7zm.9-5v1.4L15 7V5.6l.9.2zM15 3.3l.9.3v1.3l-.9-.2V3.3zm-.4 6l-.9-.1V7.7l.9.2v1.4zm-.1 2.2l-2.5-.2v-.7l2.5.2v.7zm0 1.1l-2.5-.2v-.7l2.5.2v.7zm0 1H12v-.7l2.5.1v.6zM12.3 2.5l1 .3v1.4l-1-.3V2.5zm1 4.2l-1-.2V5l1 .2v1.5zm0 1v1.4l-1-.1V7.5l1 .2zm1.3-2.2v1.4l-.9-.2V5.3l.9.2zm-.9-2.6l.9.3v1.4l-.9-.2V2.9zM16.8 13h.6v.6h-.6V13zm.6-1v.6h-.6V12h.6zm-.6-1h.6v.6h-.6V11zm.8 2h.5v.6h-.5V13zm.5-.9v.6h-.5v-.6h.5zm-.5-1h.5v.6h-.5v-.6zm-5.7-2.2l-1.1-.1V7.2l1.1.2v1.5zm-.3 7h-.8v-.7h.8v.7zm0-1.8v.7h-.8V14l.8.1zm0-1.2v.7h-.8v-.7h.8zm0-1.2v.7h-.8v-.7h.8zm0-.4l-.8-.1v-.7l.8.1v.7zm-.8-6.6l1.1.2v1.5l-1.1-.2V4.7zm0-2.7l1.1.3v1.5l-1.1-.3V2zm-.3 14h-.8v-.7h.8v.7zm-.8-1.9h.8v.7h-.8v-.7zM9.3 16h-.8v-.8h.8v.8zm-.8-2h.8v.7h-.8V14zm.8-1.2v.7h-.8v-.8l.8.1zm-.8-1.3l.8.1v.7h-.8v-.8zm0-1.2l.8.1v.7l-.8-.1v-.7zm-.2-1.8l-1-.1v-.9l1-.1v1.1zM8.1 16h-.9v-.8h.9v.8zm-.9-2H8v.8h-.9V14h.1zm.8-1.3v.8h-.9v-.8H8zm-.9-1.2H8v.8h-.9v-.8zm0-1.3H8v.8l-.9-.1v-.7zm.2-5.1l1-.2v1.5l-1 .2V5.1zm0-2.4l1-.3v1.5l-1 .2V2.7zm1.4 2.1l1.1-.2v1.6l-1.1.2V4.8zm0-2.5L9.8 2v1.6l-1.1.3V2.3zm1.2 6.4l-1.2-.2V7.3l1.1-.2.1 1.6zm.6 1.8v.7l-.8-.1v-.7l.8.1zm0 2.3v.7h-.8v-.7h.8zm-.8-.4v-.7h.8v.7h-.8zM6.8 8.3h-1v-.6l1-.1v.7zm-.5 2.6l-.9.1v-.7l.9-.1v.7zm0 1.3h-.9v-.7l.9-.1v.8zm0 1.3h-.9v-.7h.9v.7zm0 1.3h-.9V14h.9v.8zm0 1.3h-.9v-.7h.9v.7zM5.8 5.4l1-.2v1.5l-1 .2V5.4zm0-2.4l1-.2v1.5l-1 .2V3zM5 11l-.9.1v-.7l.9-.1v.7zm0 1.3h-.9v-.7l.9-.1v.8zm0 1.2h-.9v-.7H5v.7zm0 1.2h-.9V14H5v.7zM5 16h-.9v-.7H5v.7zm-1.2-4.9H3v-.7l.8-.1v.8zm0 1.2H3v-.7h.8v.7zm0 1.2H3v-.7h.8v.7zm0 1.2H3V14h.8v.7zm0 1.2H3v-.7h.8v.7zm-1.2-4.7l-.8.1v-.7l.8-.1v.7zm0 1.2h-.8v-.7h.8v.7zm0 1.2h-.8v-.7h.8v.7zm0 1.1h-.8V14h.8v.7zm0 1.2h-.8v-.7h.8v.7zm13.6-6.5V2.7l-1.7-.5v-.7L10.3.1l-3.5 1v.6l-1.7.4v6.3l-3.7.5v10.3l5.2.6.9-.1v-2.9l1.5-.1v2.8l1-.1v-2.8l1.3-.1v2.7l.6-.1V14h2.5v4.6l.9-.1v-2.4l1-.1v2.3l.7-.1v-2.3l.9-.1V18l.6-.1V9.8l-2.3-.4z"/></svg>'; break;
+			case 'icon' 			: $output .= '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="icon"><path d="M10 19.9h8.2v-2.3c-3-.6-5.6-1-8.2-1.2-2.1.2-4.3.4-6.6.9v-1.5c2.3-.7 4.5-1.1 6.6-1.4 2.6.3 5.4.9 8.2 1.9V10.4c-2.5-2.3-5.4-4.1-8.2-4.9-2.3.7-4.6 2-6.8 3.6V7.6C5.3 5.7 7.7 4.3 10 3.5c2.9.9 5.8 2.9 8.2 5.6h.1V6.9C16 3.7 13 1.2 10 .1 7 1.2 4 3.7 1.7 6.9v5.8h.1C4.4 10.9 7.2 9.6 10 9c2.2.5 4.5 1.5 6.7 2.8v1.5c-2.2-1.1-4.5-1.8-6.7-2.2-2.7.5-5.5 1.5-8.2 3V20l8.2-.1z"/></svg>'; break;
+			case 'limitless' 		: $output .= '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="80" viewBox="0 0 200 80" class="limitless"><path d="M8.7 9h2.7l3.4 10.7L18.4 9h2.1L24 19.7 27.5 9h2.6l-5 14.5h-2.2l-3.5-10.3-3.5 10.3h-2.2L8.7 9zM30.5 18c0-3.1 2.2-5.7 5.3-5.7 3.5 0 5.2 2.7 5.2 5.8v.7h-8c.3 1.8 1.5 2.8 3.1 2.8 1.2 0 2.1-.5 2.9-1.3l1.5 1.3c-1 1.2-2.4 2-4.4 2-3.2 0-5.6-2.3-5.6-5.6zm8-.8c-.2-1.6-1.1-2.9-2.8-2.9-1.5 0-2.6 1.2-2.8 2.9h5.6zM56.3 23.4V22c-.7.9-1.9 1.6-3.5 1.6-2.1 0-3.9-1.2-3.9-3.3 0-2.4 1.9-3.6 4.4-3.6 1.3 0 2.2.2 3 .5V17c0-1.5-.9-2.3-2.7-2.3-1.2 0-2.1.3-3.1.7l-.7-2c1.2-.5 2.4-.9 4.1-.9 3.2 0 4.8 1.7 4.8 4.6v6.4h-2.4zm0-4.6c-.6-.2-1.5-.4-2.5-.4-1.6 0-2.5.6-2.5 1.7 0 1 .9 1.6 2.1 1.6 1.6 0 2.9-.9 2.9-2.3v-.6zM61.7 12.5h2.5V15c.7-1.6 1.9-2.7 3.8-2.7v2.6h-.1c-2.2 0-3.7 1.4-3.7 4.3v4.1h-2.5V12.5zM69.2 18c0-3.1 2.2-5.7 5.3-5.7 3.5 0 5.2 2.7 5.2 5.8v.7h-8c.3 1.8 1.5 2.8 3.1 2.8 1.2 0 2.1-.5 2.9-1.3l1.5 1.3c-1 1.2-2.4 2-4.4 2-3.2 0-5.6-2.3-5.6-5.6zm8.1-.8c-.2-1.6-1.1-2.9-2.8-2.9-1.5 0-2.6 1.2-2.8 2.9h5.6zM107 11.9c1.3-.6 2.5-.9 3.6-1 1.3-.1 2.2.1 2.8.5.6.5.9 1 .8 1.6 0 .6-.4 1.2-1.1 1.8-.7.6-1.6 1-3 1.2-1.1.2-2.3.1-3.5-.2-1.2-.3-2.4-.9-3.4-1.6 1.3-1 2.5-1.7 3.8-2.3m2.4 19c-.2-.8-.5-1.5-1-2s-1.1-1-1.7-1.3c-.6-.3-1.3-.5-1.9-.6-.7-.1-1.2-.1-1.7 0s-.8.2-.9.5c-.2.2-.1.5.3.9.7.7 1.2 1.6 1.3 2.5.1.9 0 1.8-.4 2.6s-1 1.5-1.8 2-1.8.8-2.9.7c-1.1-.1-2.1-.5-2.7-1.3-.7-.8-1.1-1.8-1.3-3.1-.2-1.3-.2-2.7.1-4.3.3-1.6.9-3.3 1.7-5.1.4-.9.9-1.8 1.5-2.7.6-.9 1.3-1.7 2-2.6 1.3.7 2.8 1.2 4.3 1.5 1.5.3 3 .4 4.5.3 1.8-.1 3.3-.4 4.6-1 1.3-.6 2.2-1.3 2.9-2.2.7-.9 1.1-1.8 1.2-2.7.1-1 0-1.9-.5-2.7-.4-.8-1.2-1.5-2.2-2.1-1-.6-2.3-.9-3.8-.9-1.9-.1-3.8.2-5.5.7-1.8.5-3.4 1.3-5 2.2-.4-1.1-.5-2.2-.3-3.4.1-.7 0-1.2-.3-1.4-.3-.2-.7-.2-1.2 0s-1 .6-1.5 1.2-1 1.2-1.3 2c-.3.7-.5 1.6-.6 2.4 0 .9.2 1.7.8 2.6-1.1 1-2 2.2-2.9 3.4-.9 1.2-1.6 2.4-2.2 3.7-1.2 2.5-1.8 4.9-1.9 7.1-.1 2.2.3 4.2 1.1 5.9.8 1.6 1.9 3 3.4 3.9l-8.8 9.8-9.2-10.2h-1.5V61H79V48l5.9 6.2 5.9-6.2v13h4.7V38.8c1.1.4 2.3.6 3.5.6.6 0 1.2 0 1.7-.1V61h4.6V37.9c.6-.3 1.2-.7 1.7-1.2.9-.8 1.6-1.7 2-2.7.5-1 .6-2 .4-3.1M117.6 15.7c.2.4.4.7.9.9.4.2.9.2 1.4.2.5 0 1-.2 1.5-.4s1-.5 1.4-.9c.4-.4.7-.8.8-1.2.2-.4.1-.9 0-1.3-.2-.5-.5-.8-.9-.9-.4-.2-.9-.2-1.4-.2-.5.1-1 .2-1.5.5s-.9.6-1.3.9c-.4.4-.6.8-.8 1.2-.3.3-.3.8-.1 1.2"/><path d="M137.1 33.8c-1.1 1.4-2.1 2.4-3.1 3-1 .6-1.8.9-2.6.9-.6 0-1.1-.1-1.4-.4-.3-.3-.4-.6-.4-1 .1-.4.3-.8.7-1.2.4-.4 1.1-.8 1.9-1.1.7-.3 1.5-.4 2.3-.4 1 0 1.8 0 2.6.2m-12.3-18.2h3.7c-.4.6-.8 1.2-1.2 1.7-.4.6-.7 1-1 1.5-1.7 2.5-3 4.7-3.7 6.6 0 .1-.1.2-.1.3-.4.6-.9 1.2-1.4 1.8-.6.6-1.1 1.1-1.8 1.6-.6.5-1.2.8-1.8 1.1-.6.3-1.2.4-1.7.4-.3 0-.5-.1-.6-.3-.1-.2 0-.5.1-.8.1-.3.3-.7.5-1.1.2-.4.4-.8.7-1.3.2-.4.5-.9.8-1.4.3-.5.6-1.1.9-1.7.3-.6.6-1.1 1-1.7.3-.6.6-1.1.9-1.6.3-.5.4-.8.4-1.1 0-.3-.1-.4-.4-.5-.2-.1-.5-.1-.9-.1s-.8.1-1.2.1c-.4.1-.8.2-1.1.2-.3.1-.6.2-.8.3-.2.2-.4.4-.6.7-.2.3-.4.7-.7 1.2-.2.5-.5 1-.7 1.5-.3.5-.5 1.1-.8 1.7-.3.6-.6 1.3-.9 2-.3.7-.7 1.5-1.1 2.4-.4.9-.6 1.6-.6 2.3 0 .6.1 1.1.4 1.6.3.4.7.7 1.2.9.5.2 1.1.3 1.7.3.6 0 1.4-.2 2.4-.7.9-.5 1.9-1.1 2.9-1.8.8-.6 1.5-1.2 2.2-1.8v.5c0 1.3.2 2.2.8 2.9.6.7 1.3 1 2.3 1 .9 0 1.8-.2 2.7-.6.9-.4 1.8-.9 2.7-1.6.6-.4 1.1-.9 1.6-1.4-.1.6-.1 1.2 0 1.6-.7.2-1.4.5-2 .8-.9.5-1.6 1.1-2 1.8-.4.7-.7 1.3-.7 2s.1 1.4.5 2c.3.5.6.9 1.1 1.2v21h12v-4.6h-7.4V40.8c.6-.1 1.2-.3 1.8-.5 1.5-.5 2.7-1.4 3.7-2.5s1.8-2.4 2.6-3.7c1-.3 2-.7 3-1.2s1.9-1 2.9-1.6c.9-.6 1.8-1.3 2.6-2.1s1.6-1.7 2.2-2.7c.3-.5.5-.9.5-1.1 0-.3-.1-.5-.3-.5-.2-.1-.5 0-.8.1-.3.1-.6.4-.9.7-1.1 1.4-2.4 2.6-3.7 3.5-1.3.9-2.7 1.6-4.1 2.2.4-.8.7-1.5 1.1-2.3l1.2-2.1c.2-.4.5-.9.8-1.4.3-.5.6-1.1 1-1.7.3-.6.6-1.1 1-1.7.3-.6.6-1.1.9-1.6.3-.5.4-.8.4-1.1 0-.3-.1-.4-.4-.5-.2-.1-.5-.1-.9-.1s-.8.1-1.2.1c-.5.1-.8.2-1.1.2-.3.1-.5.2-.8.3-.2.2-.4.4-.6.7-.2.3-.4.7-.7 1.2-.3.6-.6 1.1-.8 1.7-.3.6-.6 1.2-.9 1.9-.4.7-.7 1.3-1.1 1.9-.4.6-.7 1.2-1.1 1.7-.4.5-.8.9-1.2 1.2-.4.3-.9.4-1.4.4-.3 0-.6-.1-.7-.4-.1-.3-.1-.8.1-1.5s.7-1.7 1.4-2.9c.7-1.3 1.8-2.9 3.2-4.8.3-.5.5-.8.5-1 0-.2 0-.4-.2-.5-.2-.1-.5-.2-.8-.1-.3 0-.7 0-1.2.1s-.8.2-1.1.2c-.3.1-.6.2-.8.4-.3.2-.5.4-.8.7-.3.3-.5.7-.9 1.1-.7 1-1.4 2.1-2.1 3.4-.2.3-.3.6-.5 1-.6.8-1.2 1.5-1.8 2.1-.7.7-1.3 1.2-2 1.6-.6.4-1.2.6-1.7.7-.5.1-.9.1-1.3-.2-.2-.2-.3-.6-.3-1.2s.2-1.4.4-2.2c.3-.9.6-1.8 1.1-2.8.5-1 1-1.9 1.6-2.8.5-.8 1.1-1.7 1.8-2.7.7-1 1.4-2 2-2.9h5.5c.3 0 .7-.1 1.1-.3.4-.2.8-.5 1.2-.8.4-.3.7-.7 1-1 .3-.3.5-.7.6-1 .1-.3.1-.5 0-.7-.1-.1-.4-.2-.8-.1-.6.1-1.4.3-2.6.4-1.2.1-2.4.3-3.8.5l.2-.2c.6-.6.9-1.1.8-1.3-.1-.2-.3-.3-.7-.3-.4 0-.9.2-1.6.4-.6.2-1.2.5-1.8.7-.7.3-1.6.6-2.7 1-1.1.3-2.2.6-3.2.7-.3 0-.7.1-1 .3-.3.2-.5.4-.7.7-.2.2-.2.5-.2.6.3.4.4.5.8.5M53 37.8h-4.6V61h12v-4.6H53M64.4 37.8H69V61h-4.6z"/><path d="M108.7 42.4h5.8V61h4.6V42.4h5.8v-4.6h-16.2M149.1 51.7h6.1v-4.6h-6.1v-4.7h7v-4.6h-11.7V61h12.1v-4.7h-7.4"/><g><path d="M167.4 47c-1.3-.5-2.5-1-2.6-2.3-.1-1.3.6-2.5 2.3-2.6.7 0 2.2-.1 4.7 1l.6-4.5c-3-1-4.6-1-5.8-1-3.9.2-6.6 3.2-6.6 7.1 0 3.9 3.2 5.7 6.9 7.1 1.3.5 2.3 1 2.4 2.4.1 1.3-1 2.2-2.4 2.3-1.1.1-4 0-6.6-1.8l-.6 4.9c3.2 1.6 6 1.8 7.3 1.7 4.3-.2 7-3.2 7-7 .1-3.9-3-5.9-6.6-7.3M184.1 56.5c-1.1.1-4 0-6.6-1.9l-.6 4.9c3.2 1.6 6 1.8 7.3 1.7 4.4-.2 7-3.2 7-7 0-3.7-3.1-5.8-6.7-7.1-1.3-.5-2.5-1-2.6-2.3-.1-1.3.6-2.5 2.3-2.6.7 0 2.2-.1 4.7 1l.6-4.5c-3-1-4.6-1-5.8-1-3.9.2-6.6 3.2-6.6 7.1 0 3.9 3.2 5.7 6.9 7.1 1.3.5 2.3 1 2.4 2.4.3 1.1-.9 2.1-2.3 2.2M50.6 73.8h-.8v-4.4h.9c1.4 0 2.1.5 2.1 2.2-.1 1.3-.8 2.2-2.2 2.2m.1-5h-2.3v.4l.5.1c.1 0 .1 0 .1.2v4.3c0 .1 0 .1-.1.2l-.5.1v.4h2.2c2 0 2.9-1.2 2.9-2.9 0-1.8-.9-2.8-2.8-2.8M59.2 73.7c0 .1 0 .1-.1.1h-2v-2h2.1v-.6h-2.1v-1.9h1.8c.1 0 .1 0 .1.1l.1.6h.5v-1.3h-3.9v.4l.5.1c.1 0 .1 0 .1.2v4.3c0 .1 0 .1-.1.2l-.5.1v.4h4V73h-.5v.7zM65.8 73.5c0 .1 0 .1-.1.1-.3.1-.7.2-1.1.2-1.2 0-1.9-.8-1.9-2.3 0-1.5.8-2.3 2-2.3.4 0 .7.1 1 .2.1 0 .1.1.1.1l.1.7h.5V69c-.4-.3-1-.4-1.7-.4-1.8 0-2.8 1.2-2.8 2.9s.8 2.9 2.6 2.9c.7 0 1.4-.1 1.8-.4v-1.2h-.5v.7zM70.2 72.1l.9-2.7.9 2.7h-1.8zm3.1 1.6l-1.7-4.9h-.9L69 73.7c0 .1-.1.1-.2.1l-.3.1v.4h1.8v-.4l-.6-.1.4-1.2h2.1l.4 1.2-.6.1v.4h1.9v-.4l-.3-.1c-.2 0-.3 0-.3-.1M75 70.1h.5l.1-.7c0-.1 0-.1.1-.1H77v4.4c0 .1 0 .1-.1.2l-.8.1v.4h2.6V74l-.8-.1c-.1 0-.1 0-.1-.1v-4.4H79c.1 0 .1 0 .1.1l.1.7h.5v-1.3H75v1.2zM85.2 69.2l.5.1c.1 0 .1 0 .1.2v3c0 1.1-.4 1.4-1.3 1.4s-1.3-.4-1.3-1.5v-3c0-.1 0-.1.1-.1l.5-.1v-.4h-2v.4l.5.1c.1 0 .1 0 .1.2v3.1c0 1.3.6 2 2 2 1.3 0 2.1-.6 2.1-2v-3.1c0-.1 0-.1.1-.1l.5-.1v-.4h-1.9v.3zM91.5 71.4h-.7v-2.1h.6c.9 0 1.4.2 1.4 1 0 .9-.6 1.1-1.3 1.1m1.9 2.3l-.5-1.3c-.1-.3-.2-.4-.4-.6.6-.2 1.1-.7 1.1-1.5 0-.7-.4-1.5-1.7-1.5h-2.4v.4l.5.1c.1 0 .1 0 .1.2v4.3c0 .1 0 .1-.1.2l-.5.1v.4h1.9v-.4l-.5-.1c-.1 0-.1 0-.1-.2V72h.8c.3 0 .4.1.5.3l.6 1.6h-.6v.4h2v-.4l-.5-.1s-.1 0-.2-.1M101 73.8c-.7 0-1-.5-1-1 0-.7.4-1 1-1.2l1.2 1.5c-.3.5-.7.7-1.2.7m2.5-.1l-.5-.6c.2-.3.3-.7.3-1.1 0-.1 0-.1.1-.1l.3-.1v-.4h-1c0 .4-.1.8-.3 1.3l-1-1.2c-.5-.6-.6-.8-.6-1.1 0-.3.2-.5.6-.5.2 0 .3 0 .4.1.1 0 .1.1.1.1l.1.5h.5v-1c-.2-.1-.7-.3-1.2-.3-.7 0-1.3.4-1.3 1.1 0 .3.2.7.4 1-.9.2-1.3.8-1.3 1.6 0 .9.7 1.5 1.6 1.5.7 0 1.2-.2 1.7-.8l.6.7h1V74l-.4-.1c0-.1 0-.1-.1-.2M112.9 72.4l-1.7-3.6h-1.5v.4l.5.1c.1 0 .1 0 .1.2v4.3c0 .1 0 .1-.1.2l-.5.1v.4h2.1v-.4l-.7-.1c-.1 0-.1 0-.1-.2V70l1.5 3.1h.7l1.5-3.1v3.8c0 .1 0 .1-.1.2l-.6.1v.4h2.1v-.4l-.5-.1c-.1 0-.1 0-.1-.1v-4.3c0-.1 0-.1.1-.1l.5-.1V69h-1.5l-1.7 3.4zM119.9 72.1l.9-2.7.9 2.7h-1.8zm3.1 1.6l-1.7-4.9h-.9l-1.7 4.9c0 .1-.1.1-.2.1l-.3.1v.4h1.8v-.4l-.6-.1.4-1.2h2.1l.4 1.2-.6.1v.4h1.9v-.4l-.3-.1c-.3 0-.3 0-.3-.1M129.1 73.5c0 .1 0 .1-.1.1-.3.1-.7.2-1.1.2-1.2 0-1.9-.8-1.9-2.3 0-1.5.8-2.3 2-2.3.4 0 .7.1 1 .2.1 0 .1.1.1.1l.1.7h.5V69c-.4-.3-1-.4-1.7-.4-1.8 0-2.8 1.2-2.8 2.9s.8 2.9 2.6 2.9c.7 0 1.4-.1 1.8-.4v-1.2h-.5v.7zM134.6 73.8c-1.1 0-1.9-.8-1.9-2.3 0-1.5.8-2.3 1.9-2.3 1.1 0 1.8.8 1.8 2.2.1 1.7-.7 2.4-1.8 2.4m.1-5.1c-1.8 0-2.7 1.2-2.7 2.9s.8 2.9 2.6 2.9 2.6-1.2 2.6-3c0-1.6-.8-2.8-2.5-2.8M143.2 69.2l.5.1c.1 0 .1 0 .1.2v4l-2.7-4.6h-1.5v.4l.5.1c.1 0 .1 0 .1.2v4.3c0 .1 0 .1-.1.2l-.5.1v.4h1.9v-.4l-.5-.1c-.1 0-.1 0-.1-.2v-4l2.8 4.6h.8v-4.9c0-.1 0-.1.1-.1l.5-.1V69h-1.9v.2zM154.5 73.5c0 .1 0 .1-.1.1-.3.1-.7.2-1.1.2-1.2 0-1.9-.8-1.9-2.3 0-1.5.8-2.3 2-2.3.4 0 .7.1 1 .2.1 0 .1.1.1.1l.1.7h.5V69c-.4-.3-1-.4-1.7-.4-1.8 0-2.8 1.2-2.8 2.9s.8 2.9 2.6 2.9c.7 0 1.4-.1 1.8-.4v-1.2h-.5v.7zM160 73.8c-1.1 0-1.9-.8-1.9-2.3 0-1.5.8-2.3 1.9-2.3 1.1 0 1.8.8 1.8 2.2.1 1.7-.7 2.4-1.8 2.4m.1-5.1c-1.8 0-2.7 1.2-2.7 2.9s.8 2.9 2.6 2.9 2.6-1.2 2.6-3c0-1.6-.8-2.8-2.5-2.8M168.3 69.2l.5.1c.1 0 .1 0 .1.2v3c0 1.1-.4 1.4-1.3 1.4s-1.3-.4-1.3-1.5v-3c0-.1 0-.1.1-.1l.5-.1v-.4h-2v.4l.5.1c.1 0 .1 0 .1.2v3.1c0 1.3.6 2 2 2 1.3 0 2.1-.6 2.1-2v-3.1c0-.1 0-.1.1-.1l.5-.1v-.4h-1.9v.3zM176.2 69.2l.5.1c.1 0 .1 0 .1.2v4l-2.7-4.6h-1.5v.4l.5.1c.1 0 .1 0 .1.2v4.3c0 .1 0 .1-.1.2l-.5.1v.4h1.9v-.4l-.5-.1c-.1 0-.1 0-.1-.2v-4l2.8 4.6h.8v-4.9c0-.1 0-.1.1-.1l.5-.1V69h-1.9v.2zM180.2 70.1h.5l.1-.7c0-.1 0-.1.1-.1h1.2v4.4c0 .1 0 .1-.1.2l-.8.1v.4h2.6V74l-.8-.1c-.1 0-.1 0-.1-.1v-4.4h1.2c.1 0 .1 0 .1.1l.1.7h.5v-1.3h-4.6v1.2zM189.7 68.8l-.1.4.6.1-1.2 2.3-1.2-2.3.6-.1v-.4h-1.7l-.1.4.3.1c.1 0 .1 0 .2.1l1.5 2.8v1.5c0 .1 0 .1-.1.2l-.7.1v.4h2.5V74l-.8-.1c-.1 0-.1 0-.1-.2v-1.5l1.5-2.7c0-.1.1-.1.2-.1l.3-.1v-.4h-1.7z"/></g></svg>'; break;
+			case 'logo' 			: $output .= '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="45" viewBox="0 0 100 45" class="logo"><path d="M17.8 42.8h17.3V38H35c-6.2-1.2-11.9-2-17.2-2.4h-.2c-4.4.3-8.9.9-13.8 1.8v-3.1c4.8-1.4 9.5-2.4 14-2.9 5.4.6 11.2 1.9 17.2 3.9h.1V22.9c-5.2-4.9-11.3-8.6-17.3-10.3h-.2c-4.8 1.4-9.7 4-14.1 7.6v-3.1C7.8 13 12.8 10 17.7 8.4c6.1 2 12.2 6.2 17.2 11.8l.1-.1v-4.7C30.3 8.7 24 3.5 17.8 1.1h-.2v.1C11.4 3.5 5.1 8.7.3 15.4v12.4l.1-.1c5.5-3.8 11.5-6.6 17.3-7.9 4.7 1 9.5 3 14.1 5.8v3.1c-4.6-2.2-9.4-3.8-14-4.7h-.2C12 25.1 6 27.3.4 30.4V42.8h17.3.1zM39.3 43.1h17.2v-5.5H45.4v-13h7.9V19h-7.9V7.7h10.1V2.2H39.3M74 4.7C72.2 3 68.9 2.2 64 2.2h-6.4v41h8.9c3.6 0 6.2-.9 7.8-2.7 1.6-1.8 2.4-4.6 2.4-8.5V13.7c0-4.3-.9-7.3-2.7-9zm-3.4 25.8c0 2.7-.4 4.6-1.2 5.7-.8 1.1-2.1 1.6-4 1.6h-1.7V7.4h1.8c2 0 3.3.4 4 1.3.7.9 1.1 2.5 1.1 4.8v17zM97.2 40.7c1.7-2.2 2.5-5.3 2.5-9.5v-2.6h-6.2v3.9c0 2.2-.3 3.7-.9 4.7-.6 1-1.5 1.5-2.8 1.5s-2.2-.5-2.8-1.5c-.6-1-.9-2.5-.9-4.7V12.8c0-2.2.3-3.7.9-4.7.6-1 1.5-1.5 2.8-1.5 1.3 0 2.2.5 2.8 1.5.6 1 .9 2.6.9 4.7V16h6.2v-2c0-4.1-.8-7.2-2.5-9.3-1.7-2.1-4.1-3.2-7.3-3.2-3.5 0-6 1.1-7.5 3.4C80.8 7.1 80 10.8 80 16v13.3c0 5.2.8 8.9 2.3 11.2 1.5 2.3 4.1 3.4 7.5 3.4 3.3 0 5.7-1 7.4-3.2"/></svg>'; break;
+			case 'phone2' 			: $output .= '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="phone2"><path d="M15.5 13.3l-.1-.2c-.1-.4-.6-.8-1-.9l-1.5-.4c-.4-.1-1 0-1.3.3l-.5.5c-1.9-.5-3.4-2-4-4l.5-.5c.3-.3.4-.9.3-1.3l-.1-1.3c-.1-.4-.5-.8-.9-1h-.2c-.4-.1-1 0-1.2.3l-.9.7c-.1.2-.2.6-.2.6 0 2.5 1 5 2.7 6.7 1.8 1.8 4.2 2.8 6.7 2.7 0 0 .4-.1.6-.2l.8-.8c.3-.2.5-.8.3-1.2M10 .1C4.5.1.1 4.6.1 10s4.5 9.9 9.9 9.9 9.9-4.5 9.9-9.9S15.5.1 10 .1m0 1.2c4.8 0 8.7 3.9 8.7 8.7s-3.9 8.7-8.7 8.7-8.7-3.9-8.7-8.7S5.2 1.3 10 1.3"/></svg>'; break;
+			case 'question' 		: $output .= '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="question"><path d="M9.2 14.5c0 .5.4.8.8.8s.8-.4.8-.8c0-.5-.4-.8-.8-.8-.5 0-.8.4-.8.8m4-6.7c0-1.8-1.4-3.2-3.2-3.2S6.8 6 6.8 7.8c0 .4.3.7.7.7.4 0 .7-.3.7-.7 0-1 .8-1.9 1.9-1.9 1 0 1.9.8 1.9 1.9s-1 1.8-2 1.8c-.4 0-.7.3-.7.7v2.3c0 .4.3.7.7.7.4 0 .7-.3.7-.7v-1.7c1.4-.3 2.5-1.6 2.5-3.1m5.5 2.2c0 4.8-3.9 8.7-8.7 8.7S1.3 14.8 1.3 10 5.2 1.3 10 1.3c4.8 0 8.7 3.9 8.7 8.7m1.3 0c0-5.5-4.5-10-10-10S0 4.5 0 10s4.5 10 10 10 10-4.5 10-10"/></svg>'; break;
+			case 'sites' 			: $output .= '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="sites"><path d="M8.1 11.1c0-.7-.6-1.3-1.3-1.3-.7 0-1.3.6-1.3 1.3 0 .7.6 1.3 1.3 1.3.7-.1 1.3-.6 1.3-1.3m10.7-3.6l-5.4-1.4.4-3.6 5.4 2-.4 3zm-5.4-1.1l5.4 1.4-.3 2.5-5.3-.6.2-3.3zm-.3 9.8l-3.9.8c0-.5 0-1.6.7-2.4.6-.7 1.6-1.1 2.9-1.2l.3 2.8zM13 2.9L12.8 6 9 6.5v.1s-.4 1.6-.9 2.3c-.3-.2-.6-.3-1-.3l-.3-2.7 6.2-3zM6.8 9c1.2 0 2.1 1 2.1 2.1s-.9 2.1-2.1 2.1c-1.1 0-2.1-.9-2.1-2.1C4.8 10 5.7 9 6.8 9m-.3-.5c-1 .1-1.8.8-2.1 1.8l-2.8-.4-.3-2.6c1 0 1.7-.3 2.1-.9.4-.5.5-1 .5-1.5l2.2.9.4 2.7zM3.7 4.8c0 .4-.1 1-.5 1.4-.4.5-1 .8-1.9.9L.9 3.7l2.8 1.1zm-2.2 5.7l2.8.5v.1c0 .6.2 1.1.6 1.6l-1.4 1.1-.4 2.9-2.1-.4.5-5.8zm1.7 6.2l.4-2.8 1.4-1c.4.4 1 .7 1.6.8l-.4 3.7-3-.7zm9.3-7l-3.2.5c-.2-.5-.6-.9-1-1.2.4-.7.8-2 .9-2.3l3.5-.5-.2 3.5zm-5.7 7.7l.4-3.8c1.2-.2 2.1-1.3 2.1-2.5v-.2l3.2-.5.3 2.7c-1.4.1-2.4.5-3.1 1.3-.7.9-.8 2.1-.7 2.6l-2.2.4zm6.4-7.1l5.2.6.8 6.4-3.2-.7-.4-4.1 2.2.3v-.3l-2.4-.3.4 4.3-2-.4-.6-5.8zm5.8.5l.9-6.7-6.1-2.3-7.3 3.5L.1 2.6 1 9.8l-.8 7L7 18.1l6.9-1.3 6.1 1.4-1-7.4z"/></svg>'; break;
 
 		} // switch
 
@@ -512,11 +657,36 @@ class edc_2015_Themekit {
 	} // make_phone_link()
 
 	/**
+	 * Converts the search input button to an HTML5 button element
+	 *
+	 * @hook 		get_search_form
+	 *
+	 * @param 		mixed  		$form 			The current form HTML
+	 * @return 		mixed 						The modified form HTML
+	 */
+	public function make_search_button_a_button( $form ) {
+
+		$form = '<form action="' . esc_url( home_url( '/' ) ) . '" class="search-form" method="get" role="search" >
+				<label class="screen-reader-text">' . _x( 'Search for:', 'label' ) . '</label>
+				<input type="search" class="search-field" placeholder="' . esc_attr_x( 'Search &hellip;', 'placeholder' ) . '" value="' . get_search_query() . '" name="s" title="' . esc_attr_x( 'Search for:', 'label' ) . '" />
+				<button type="submit" class="search-submit">
+					<span class="screen-reader-text">'. esc_attr_x( 'Search', 'submit button' ) .'</span>
+					<span class="dashicons dashicons-search"></span>
+				</button>
+			</form>';
+
+		return $form;
+
+	} // make_search_button_a_button()
+
+	/**
 	 * Adds the name of the page or post to the body classes.
 	 *
-	 * @global 	$post						The $post object
-	 * @param 	array 		$classes 		Classes for the body element.
-	 * @return 	array 						The modified body class array
+	 * @hook 		body_class
+	 *
+	 * @global 		$post						The $post object
+	 * @param 		array 		$classes 		Classes for the body element.
+	 * @return 		array 						The modified body class array
 	 */
 	public function page_body_classes( $classes ) {
 
@@ -537,12 +707,36 @@ class edc_2015_Themekit {
 	} // page_body_classes()
 
 	/**
+	 * Removes the "Private" text from the private pages in the breadcrumbs
+	 *
+	 * @hook 		wp_seo_get_bc_title
+	 *
+	 * @param 		string 		$text 			The breadcrumb text
+	 * @return 		string 						The modified breadcrumb text
+	 */
+	public function remove_private( $text ) {
+
+		$check = stripos( $text, 'Private: ' );
+
+		if ( is_int( $check ) ) {
+
+			$text = str_replace( 'Private: ', '', $text );
+
+		}
+
+		return $text;
+
+	} // remove_private()
+
+	/**
 	 * Reduce the length of a string by character count
 	 *
-	 * @param 	string 		$text 		The string to reduce
-	 * @param 	int 		$limit 		Max amount of characters to allow
-	 * @param 	string 		$after 		Text for after the limit
-	 * @return 	string 					The possibly reduced string
+	 * @hook 		hook_name
+	 *
+	 * @param 		string 		$text 		The string to reduce
+	 * @param 		int 		$limit 		Max amount of characters to allow
+	 * @param 		string 		$after 		Text for after the limit
+	 * @return 		string 					The possibly reduced string
 	 */
 	public function shorten_text( $text, $limit = 100, $after = '...' ) {
 
@@ -562,8 +756,8 @@ class edc_2015_Themekit {
 	/**
 	 * Echos the requested SVG
 	 *
-	 * @param 	string 		$svg 		The name of the icon to return
-	 * @return 	mixed 					The SVG code
+	 * @param 		string 		$svg 		The name of the icon to return
+	 * @return 		mixed 					The SVG code
 	 */
 	public function the_svg( $svg ) {
 
@@ -572,10 +766,34 @@ class edc_2015_Themekit {
 	} // the_svg()
 
 	/**
+	 * Unlinks breadcrumbs that are private pages
+	 *
+	 * @hook 		wpseo_breadcrumb_single_link
+	 *
+	 * @param 		mixed 		$output 		The HTML output for the breadcrumb
+	 * @param 		array 		$link 			Array of link info
+	 * @return 		mixed 						The modified link output
+	 */
+	public function unlink_private_pages( $output, $link ) {
+
+		$id 		= url_to_postid( $link['url'] );
+		$options 	= WPSEO_Options::get_all();
+
+		if ( $options['breadcrumbs-home'] !== $link['text'] && 0 === $id ) {
+
+			$output = '<span rel="v:child" typeof="v:Breadcrumb">' . $link['text'] . '</span>';
+
+		}
+
+		return $output;
+
+	} // unlink_private_pages()
+
+	/**
 	 * Returns an attachment by the filename
 	 *
-	 * @param  [type] $post_name [description]
-	 * @return [type]            [description]
+	 * @param 		string 			$post_name 				The post name
+	 * @return 		object 									The attachment post object
 	 */
 	function wp_get_attachment_by_post_name( $post_name ) {
 
@@ -607,7 +825,7 @@ $edc_2015_themekit = new edc_2015_Themekit();
 /**
  * Prints whatever in a nice, readable format
  */
-public function showme( $input ) {
+function showme( $input ) {
 
 	echo '<pre>'; print_r( $input ); echo '</pre>';
 
