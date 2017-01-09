@@ -14,15 +14,16 @@ $color__background-screen	: $light;
 $color__background-hr		: $gray;
 $color__background-pre		: $gray;
 $color__background-ins		: $teal;
-$color__bg-input 			: $gray;
+$color__bg-input 			: $light;
 $color__background-button	: $gray;
 $color__bg-button-hover 	: lighten( $color__background-button, 10% );
 $color__bg-button-focus 	: darken( $color__background-button, 10% );
 
 // Text colors
 $color__text-screen			: #21759b;
-$color__text-input			: $dark;
+$color__text-input			: $gray;
 $color__text-input-focus	: $dark;
+$color__text-pre 			: $light;
 $color__link				: $teal;
 $color__link-visited		: $teal;
 $color__link-hover			: $teal;
@@ -40,7 +41,7 @@ $color__border-button-hover	: $gray #bbb #aaa;
 $color__border-button-focus	: #aaa #bbb #bbb;
 $color__border-input		: $gray;
 $color__border-input-focus 	: $gray;
-$color__outline 			: $gray;
+$color__outline 			: $teal;
 $color__border-abbr			: #666;
 $color__outline-menu-link 	: $gray;
 

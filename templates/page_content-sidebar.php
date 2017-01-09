@@ -10,7 +10,7 @@
 get_header();
 
 	?><div id="primary" class="content-area content-sidebar">
-		<main id="main" class="site-main" role="main"><?php
+		<main id="main" class="site-main content-sidebar" role="main"><?php
 
 			while ( have_posts() ) : the_post();
 

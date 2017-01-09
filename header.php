@@ -34,12 +34,15 @@ do_action( 'after_body' );
 		<div class="wrap wrap-header">
 			<div class="site-branding">
 				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
+					<span class="screen-reader-text"><?php esc_html_e( 'Return to the EDC homepage', 'edc-2015' ); ?></span>
 					<div class="site-logo"><?php
 
-						$info = $edc_2015_themekit->get_customizer_image_info( 'site_logo' );
+						echo $edc_2015_themekit->get_svg( 'fulllogo' );
 
-						?><img alt="<?php echo $info['alt']; ?>" class="logo" src="<?php echo $info['url']; ?>">
-					</div>
+						//$info = $edc_2015_themekit->get_customizer_image_info( 'site_logo' );
+
+						/*<img alt="<?php echo $info['alt']; ?>" class="logo" src="<?php echo $info['url']; ?>">*/
+					?></div>
 				</a>
 			</div><!-- .site-branding -->
 			<div class="header-menus"><?php

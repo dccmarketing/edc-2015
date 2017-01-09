@@ -52,7 +52,7 @@
 
 				@media only screen and (min-width: $bp__menu-button+1) {
 					color 			: $gray;
-					padding-bottom 	: 0.5em;
+					padding-bottom 	: 0.75em;
 					white-space 	: nowrap;
 				}
 			}
@@ -249,12 +249,19 @@
 
 	@media only screen and (min-width: $bp__header1) and (max-width: $bp__laptop) {
 		background-color: $color__bg-menu-button;
-		bottom 			: 0;
 		color 			: $color__text-menu-button;
 		position 		: absolute;
 		right 			: 0;
 		width 			: 200px;
 		z-index 		: 99;
+	}
+
+	@media only screen and (min-width: $bp__header1) and (max-width: $bp__headings1 - 1) {
+		top: 0;
+	}
+
+	@media only screen and (min-width: $bp__headings1) and (max-width: $bp__laptop) {
+		bottom: 0;
 	}
 
 	@media only screen and (min-width: $bp__menu-button+1) {

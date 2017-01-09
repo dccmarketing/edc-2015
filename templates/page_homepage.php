@@ -9,7 +9,8 @@
 
 global $edc_2015_themekit;
 
-$mods = get_theme_mods();
+$mods 						= get_theme_mods();
+$mip 						= $edc_2015_themekit->get_customizer_image_info( 'mip_promo_logo' );
 
 get_header();
 
@@ -18,7 +19,8 @@ get_header();
 			<section class="news">
 				<h2 class="section-title"><?php esc_html_e( 'Announcements', 'edc-2015' ); ?></h2><?php
 
-				$args['posts_on_page'] 	= 3;
+				$args['offset'] 		= 1;
+				$args['posts_per_page'] = 3;
 				$news 					= $edc_2015_themekit->get_posts( 'post', $args, 'home' );
 
 				while ( $news->have_posts() ) : $news->the_post();
@@ -29,7 +31,13 @@ get_header();
 
 				wp_reset_postdata();
 
-				?><div class="link-news"><a href="<?php echo esc_url( $edc_2015_themekit->get_posts_page() ); ?>"><?php esc_html_e( 'View all announcements', 'edc-2015' ); ?></a></div>
+				?><div class="link-news">
+					<a href="<?php echo esc_url( $edc_2015_themekit->get_posts_page() ); ?>"><?php
+
+						esc_html_e( 'View all announcements', 'edc-2015' );
+
+					?></a>
+				</div>
 			</section>
 			<section class="sites"><?php
 
@@ -38,7 +46,7 @@ get_header();
 				get_template_part( 'menus/menu', 'sites' );
 
 			?></section>
-			<section class="btn-mip">
+			<a class="btn-mip" href="<?php echo esc_url( $mods['mip_promo_url'] ); ?>">
 				<div class="text-mip">
 					<div class="mip-line1"><?php
 
@@ -50,8 +58,8 @@ get_header();
 
 					?></div>
 				</div>
-				<img class="logo-mip" src="<?php echo esc_url( $mods['mip_promo_logo'] ); ?>">
-			</section>
+				<img alt="<?php echo esc_attr( $mip['alt'] ); ?>" class="logo-mip" src="<?php echo esc_url( $mip['url'] ); ?>">
+			</a>
 			<section class="page-content"><?php
 
 				the_content();

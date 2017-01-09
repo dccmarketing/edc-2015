@@ -148,8 +148,7 @@ class edc_2015_Menukit {
 		$output = '';
 
 		$output .= '<a href="' . $item->url . '" class="icon-menu" ' . $atts . '>';
-		$output .= '<span class="screen-reader-text">';
-		$output .= $item->title . '</span>';
+		$output .= '<span class="screen-reader-text">' . $item->title . '</span>';
 		$output .= '<span class="dashicons dashicons-' . $class . '"></span>';
 		$output .= '</a>';
 
@@ -279,16 +278,18 @@ class edc_2015_Menukit {
 
 		$output = '';
 
-		$output .= '<a href="' . $item->url . '" class="icon-menu" ' . $atts . '>';
-		$output .= '<span class="screen-reader-text">';
-
 		if ( 'phone2' === $item->classes[0] ) {
 
-			$output .= 'Call ';
+			$label = 'Call ' . $item->title;
+
+		} else {
+
+			$label = $item->title;
 
 		}
 
-		$output .= $item->title . '</span>';
+		$output .= '<a href="' . $item->url . '" class="icon-menu" ' . $atts . '>';
+		$output .= '<span class="screen-reader-text">' . $label . '</span>';
 		$output .= $class;
 
 		if ( 'phone2' === $item->classes[0] ) {
@@ -324,9 +325,9 @@ class edc_2015_Menukit {
 
 		$atts 	= $this->get_attributes( $item );
 		$output = '';
-		$output .= '<div class="btn-search dashicons dashicons-search" ' . $atts . '>';
+		$output .= '<a class="btn-search dashicons dashicons-search" ' . $atts . '>';
 		$output .= '<span class="screen-reader-text">' . $item->title . '</span>';
-		$output .= '</div>';
+		$output .= '</a>';
 
 		return $output;
 

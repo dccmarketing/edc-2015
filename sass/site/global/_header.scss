@@ -43,6 +43,10 @@
 
 	a {
 		@include unline( $color__text-site-title );
+
+		&:focus {
+			outline-color: $light;
+		}
 	}
 
 	.wrap {
@@ -69,7 +73,7 @@
 
 .site-branding {
 
-	@media only screen and (min-width: $bp__header1) {
+	@media only screen and (min-width: $bp__top-header-2) {
 		display 		: inline-block;
 		vertical-align 	: top;
 		width 			: $size__logo-width;
@@ -82,7 +86,9 @@
 	}
 
 	.logo {
-		max-width 	: 185px;
+		fill 	: $light;
+		height 	: 125px;
+		width 	: 185px;
 	}
 
 	p {
@@ -97,7 +103,7 @@
 
 .header-menus {
 
-	@media only screen and (min-width: $bp__header1) {
+	@media only screen and (min-width: $bp__headings1) {
 		display 		: inline-block;
 		vertical-align 	: top;
 		width 			: calc( 100% - 190px );
@@ -115,14 +121,23 @@
 }
 
 .after-header-subpage {
-	background-color 	: $gray;
-	background-position : center center;
-	background-size 	: cover;
-	background-repeat 	: no-repeat;
-	height 				: 300px;
-	width 				: 100%;
+	display: none;
+
+	@media only screen and (min-width: $bp__tablet) {
+		background-color 	: $gray;
+		background-position : center center;
+		background-size 	: cover;
+		background-repeat 	: no-repeat;
+		display 			: block;
+		height 				: 300px;
+		width 				: 100%;
+	}
 
 	.community-profile & {
 		height: 350px;
+	}
+
+	.home & {
+		display: none;
 	}
 }

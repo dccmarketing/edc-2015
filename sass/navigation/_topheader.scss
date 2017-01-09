@@ -15,11 +15,7 @@
 			max-width: none;
 		}
 
-		@media only screen and (min-width: $bp__header1) {
-			text-align: left;
-		}
-
-		@media only screen and (min-width: $bp__top-header-2) {
+		@media only screen and (min-width: $bp__headings1) {
 			text-align: right;
 		}
 
@@ -35,5 +31,9 @@
 
 	.btn-search {
 		font-size 	: 2em;
+
+		&:hover {
+			text-decoration: none;
+		}
 	}
 }

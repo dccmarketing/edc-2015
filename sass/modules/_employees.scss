@@ -1,0 +1,63 @@
+.staff {
+	.page-content {
+		padding-top: 1.5em;
+	}
+}
+
+.employee-list-wrap {
+	display 	: flex;
+	flex-wrap 	: wrap;
+}
+
+.employee {
+	text-align 	: center;
+	width 		: 100%;
+
+	@media only screen and (min-width: $bp__top-header-menu) {
+		width: 50%;
+	}
+
+	@media only screen and (min-width: $bp__employees) {
+		text-align: left;
+	}
+}
+
+.employee-list-link {
+	display 		: block;
+	text-decoration : none;
+
+	&:hover {
+		text-decoration: underline;
+	}
+
+	dd {
+		margin-left: 0;
+
+		@media only screen and (max-width: $bp__employees - 1) {
+			margin: 0 auto;
+		}
+	}
+}
+
+.employee-list-thumb {
+	background-color 	: $teal;
+	background-position : center -10px;
+	background-repeat 	: no-repeat;
+	background-size 	: cover;
+	height 				: 200px;
+	width 				: 200px;
+
+	@media only screen and (min-width: $bp__employees) {
+		float: left;
+	}
+}
+
+.container-employee {
+	.img-employee {
+		@media only screen and (max-width: $bp__top-header-menu - 1) {
+			display 	: inline-block;
+			float 		: none;
+			margin 		: 0 auto;
+		}
+	}
+}

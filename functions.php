@@ -140,11 +140,6 @@ add_action( 'wp_enqueue_scripts', 'edc_2015_scripts' );
 require get_template_directory() . '/inc/template-tags.php';
 
 /**
- * Custom functions that act independently of the theme templates.
- */
-require get_template_directory() . '/inc/extras.php';
-
-/**
  * Customizer additions.
  */
 require get_template_directory() . '/inc/customizer.php';
@@ -160,6 +155,11 @@ require get_template_directory() . '/inc/jetpack.php';
 require get_template_directory() . '/inc/themekit.php';
 
 /**
+ * Load Actions and Filters
+ */
+require get_template_directory() . '/inc/actions-and-filters.php';
+
+/**
  * Load Slushman Menukit
  */
 require get_template_directory() . '/inc/menukit.php';
@@ -168,3 +168,4 @@ require get_template_directory() . '/inc/menukit.php';
  * Load Main Menu Walker
  */
 require get_template_directory() . '/inc/main-menu-walker.php';
+

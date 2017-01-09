@@ -71,6 +71,17 @@ class edc_2015_Customize {
 			)
 		);
 
+		// Images
+		$wp_customize->add_section( 'images_options',
+			array(
+				'capability' 	=> 'edit_theme_options',
+				'description' 	=> esc_html__( 'Image Options', 'edc-2015' ),
+				'panel' 		=> 'theme_options',
+				'priority' 		=> 10,
+				'title' 		=> esc_html__( 'Images', 'edc-2015' )
+			)
+		);
+
 		// Footer Options
 		$wp_customize->add_section( 'footer_options',
 			array(
@@ -86,31 +97,6 @@ class edc_2015_Customize {
 
 
 		// Fields
-
-		// Site Logo Field
-		$wp_customize->add_setting(
-			'site_logo',
-			array(
-				'default' => '',
-				'transport' => 'postMessage'
-			)
-		);
-		$wp_customize->add_control(
-			new WP_Customize_Image_Control(
-				$wp_customize,
-				'site_logo',
-				array(
-					'description' 	=> esc_html__( '', 'edc-2015' ),
-					'label' => esc_html__( 'Site Logo', 'edc-2015' ),
-					'section' => 'title_tagline',
-					'settings' => 'site_logo'
-				)
-			)
-		);
-		$wp_customize->get_setting( 'site_logo' )->transport = 'postMessage';
-
-
-
 
 		// MIP Promo Button Line 1 Field
 		$wp_customize->add_setting(
@@ -173,6 +159,26 @@ class edc_2015_Customize {
 			)
 		);
 		$wp_customize->get_setting( 'mip_promo_logo' )->transport = 'postMessage';
+
+		// MIP Button URL Field
+		$wp_customize->add_setting(
+			'mip_promo_url',
+			array(
+				'default'  	=> '',
+				'transport' => 'postMessage'
+			)
+		);
+		$wp_customize->add_control(
+			'mip_promo_url',
+			array(
+				'description' 	=> esc_html__( '', 'edc-2015' ),
+				'label' => esc_html__( 'MIP Promo URL', 'edc-2015' ),
+				'section' => 'homepage',
+				'settings' => 'mip_promo_url',
+				'type' => 'url'
+			)
+		);
+		$wp_customize->get_setting( 'mip_promo_url' )->transport = 'postMessage';
 
 		// YouTube URL Field
 		$wp_customize->add_setting(
@@ -278,6 +284,30 @@ class edc_2015_Customize {
 			)
 		);
 		$wp_customize->get_setting( 'footer_phone' )->transport = 'postMessage';
+
+
+
+		$wp_customize->add_setting(
+			'default_header_image',
+			array(
+				'default' => '',
+				'transport' => 'postMessage'
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Media_Control(
+				$wp_customize,
+				'default_header_image',
+				array(
+					'description' 	=> esc_html__( '', 'tillotson' ),
+					'label' => esc_html__( 'Default Header Image', 'tillotson' ),
+					'mime_type' => '',
+					'section' => 'images_options',
+					'settings' => 'default_header_image'
+				)
+			)
+		);
+		$wp_customize->get_setting( 'default_header_image' )->transport = 'postMessage';
 
 /*
 		// Theme Options Panel
@@ -627,6 +657,59 @@ class edc_2015_Customize {
 			)
 		);
 		$wp_customize->get_setting( 'image_upload' )->transport = 'postMessage';
+
+		// Media Upload Field
+		// Can be used for images
+		// Returns the image ID, not a URL
+		$wp_customize->add_setting(
+			'media_upload',
+			array(
+				'default' => '',
+				'transport' => 'postMessage'
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Media_Control(
+				$wp_customize,
+				'media_upload',
+				array(
+					'description' 	=> esc_html__( '', 'tillotson' ),
+					'label' => esc_html__( 'Media Field', 'tillotson' ),
+					'mime_type' => '',
+					'section' => 'new_section',
+					'settings' => 'media_upload'
+				)
+			)
+		);
+		$wp_customize->get_setting( 'media_upload' )->transport = 'postMessage';
+
+
+
+
+		// Cropped Image Field
+		$wp_customize->add_setting(
+			'cropped_image',
+			array(
+				'default' => '',
+				'transport' => 'postMessage'
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Cropped_Image_Control(
+				$wp_customize,
+				'cropped_image',
+				array(
+					'description' 	=> esc_html__( '', 'tillotson' ),
+					'flex_height' => '',
+					'flex_width' => '',
+					'height' => '1080',
+					'section' => 'new_section',
+					'settings' => 'cropped_image',
+					width' => '1920'
+				)
+			)
+		);
+		$wp_customize->get_setting( 'cropped_image' )->transport = 'postMessage';
 		*/
 
 

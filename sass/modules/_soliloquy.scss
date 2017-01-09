@@ -1,4 +1,4 @@
-#soliloquy-169 {
+.home .soliloquy-container {
 
 	.soliloquy-caption {
 		top: 200px;
@@ -10,62 +10,59 @@
 			margin 			: 0 auto;
 			max-width 		: $size__max-width;
 			padding 		: 0 !important;
+		}
+	}
 
-			.title {
-				font-size 		: 75px;
-				text-align 		: right;
-				text-shadow 	: 2px 2px 0 rgba( $dark, 0.75 );
-				text-transform	: uppercase;
+	.section {
+		background-color: $gray;
+		bottom 			: 0;
+		color 			: $light;
+		font-style 		: oblique;
+		left 			: 50%;
+		max-width 		: $size__max-width;
+		padding 		: 2em 1em 0;
+		position 		: absolute;
+		transform 		: translateX(-50%);
+		width 			: 100%;
+
+		.line1 {
+			font-size 		: 32px;
+			text-align 		: left;
+			text-transform	: uppercase;
+
+			@media only screen and (min-width: $bp__employees) {
+				font-size 		: 40px;
+			}
+		}
+
+		.line2 {
+			font-size 		: 22px;
+			text-align 		: left;
+			font-weight 	: 400;
+
+			@media only screen and (min-width: $bp__employees) {
+				font-size 		: 25px;
+			}
+		}
+
+		.btn-more {
+			background-color: $teal;
+			color 			: $light;
+			display 		: block;
+			font-size 		: 20px;
+			margin 			: 1em auto 0;
+			padding 		: 1em;
+			text-transform	: uppercase;
+			width 			: 225px;
+
+			&:after {
+				content 	: "-";
+				margin-left : 0.5em;
 			}
 
-			.subtitle {
-				font-size 		: 38px;
-				text-align 		: right;
-				text-shadow 	: 2px 2px 0 rgba( $dark, 0.75 );
-				text-transform	: uppercase;
-			}
-
-			.section {
-				background-color: $gray;
-				bottom 			: 0;
-				font-style 		: oblique;
-				max-width 		: $size__max-width;
-				padding 		: 2em 1em 0;
-				position 		: absolute;
-				width 			: 100%;
-
-				.line1 {
-					font-size 		: 40px;
-					text-align 		: left;
-					text-transform	: uppercase;
-				}
-
-				.line2 {
-					font-size 		: 25px;
-					text-align 		: left;
-					font-weight 	: 400;
-				}
-
-				.btn-more {
-					background-color: $teal;
-					color 			: $light;
-					display 		: block;
-					font-size 		: 20px;
-					margin 			: 1.5em auto 0;
-					padding 		: 1em;
-					text-transform	: uppercase;
-					width 			: 225px;
-
-					&:after {
-						content 	: "-";
-						margin-left : 0.5em;
-					}
-
-					&:before {
-						content 	: "-";
-						margin-right: 0.5em;
-					}
-				}
+			&:before {
+				content 	: "-";
+				margin-right: 0.5em;
 			}
 		}
 	}

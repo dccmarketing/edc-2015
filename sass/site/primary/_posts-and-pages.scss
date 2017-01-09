@@ -6,27 +6,28 @@
 	margin: 0 0 1.5em;
 }
 
-.byline,
-.updated:not(.published){
-	display: none;
-}
-
-.single .byline,
-.group-blog .byline {
-	display: inline;
-}
-
 .page-content,
 .entry-content,
 .entry-summary {
 	hyphens 	: auto;
-	margin 		: 1.5em 0 0;
+	margin 		: 0;
 	word-wrap 	: break-word;
+
+	p {
+		margin-top: 0;
+	}
+
+	.resources & {
+
+		h2 {
+			margin-top: 0;
+		}
+	}
 }
 
 .page-links {
-	clear: both;
-	margin: 0 0 1.5em;
+	clear 	: both;
+	margin 	: 0 0 1.5em;
 }
 
 .site-content {
@@ -39,7 +40,6 @@
 .content-area {
 	float 		: left;
 	overflow 	: auto;
-	padding 	: 1em;
 	width 		: 100%;
 
 	@media only screen and (min-width: $bp__tablet) {
@@ -62,12 +62,50 @@
 	}
 }
 
-.page-title {
+h1.page-title {
 	background-color: $teal;
 	color 			: $light;
 	display 		: inline-block;
 	font-weight 	: 400;
-	margin 			: 0;
+	margin-top		: 0;
 	padding 		: 0.33em;
 	text-transform 	: uppercase;
+}
+
+.entry-title {
+
+	a {
+		@include unline( $teal );
+	}
+}
+
+.page-template-page_lois {
+
+	.content-mobile {
+
+		@media only screen and (min-width: $bp__laptop) {
+			display: none;
+		}
+	}
+
+	.wrap-lois {
+		display: none;
+
+		@media only screen and (min-width: $bp__laptop) {
+			display 		: block;
+			height 			: 0;
+			overflow 		: hidden;
+			padding-bottom 	: 1950px;
+			position 		: relative;
+			text-align 		: center;
+
+			iframe {
+				height 		: 100%;
+				left 		: 0;
+				position 	: absolute;
+				top 		: 0;
+				width 		: 100%;
+			}
+		}
+	}
 }

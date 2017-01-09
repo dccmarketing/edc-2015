@@ -1,0 +1,9 @@
+.byline,
+.updated:not(.published){
+	display: none;
+}
+
+.comments-link,
+.entry-meta {
+	margin-right: 1em;
+}

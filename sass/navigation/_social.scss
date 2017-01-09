@@ -1,6 +1,6 @@
 .nav-social {
 	margin 			: 0 auto;
-	max-width 		: 1000px;
+	max-width 		: $size__max-width;
 	pointer-events 	: none;
 
 	.screen-reader-text,
@@ -46,6 +46,10 @@
 			background-color: $teal;
 			padding 		: 0.35em 0.25em;
 
+			& a:focus {
+				outline-color: $light;
+			}
+
 			&.phone2 {
 				background-color: $ltgray;
 				padding 		: 0.6em;
@@ -55,6 +59,10 @@
 					fill 	: $teal;
 					height 	: 28px;
 					width 	: 28px;
+				}
+
+				a {
+					outline-color: $teal;
 				}
 			}
 		}
@@ -80,6 +88,10 @@
 	.home & {
 		top: $size__header-height + 12px;
 
+		@media only screen and (min-width: $bp__tablet) {
+			top: $size__header-height + 19px;
+		}
+
 		@media only screen and (min-width: $bp__laptop) {
 			top: $size__header-height;
 		}
@@ -88,8 +100,12 @@
 	.home.admin-bar & {
 		top: $size__wp-admin-bar-1 + $size__header-height + 12px;
 
+		@media only screen and (min-width: $bp__tablet) {
+			top: $size__wp-admin-bar-1 + $size__header-height + 20px;
+		}
+
 		@media only screen and (min-width: $bp__admin-bar-1) {
-			top: $size__wp-admin-bar-2 + $size__header-height + 12px;
+			top: $size__wp-admin-bar-2 + $size__header-height + 20px;
 		}
 
 		@media only screen and (min-width: $bp__laptop) {

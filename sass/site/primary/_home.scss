@@ -35,10 +35,6 @@
 			font-size 	: 20px;
 			font-weight : 400;
 			margin 		: 0;
-
-			a {
-				@include unline( $teal );
-			}
 		}
 
 		.entry-content {
@@ -123,12 +119,14 @@
 		}
 	}
 
-	section.btn-mip {
+	.btn-mip {
 		background-color: $teal;
 		color 			: $light;
-		margin-bottom 	: 4em;
+		margin 			: 0 auto 4em;
 		padding 		: 0.5em;
 		text-align 		: center;
+		text-decoration : none;
+		width 			: 98%;
 
 		@media only screen and (min-width: $bp__top-header-menu) {
 			padding: 1em;
@@ -202,4 +200,67 @@
 		}
 	}
 
+
+	// Slider
+	.tagline {
+		color 		: $light;
+		margin 		: 0 auto;
+		max-width 	: $size__max-width;
+	}
+
+	.title {
+		font-size 		: 75px;
+		text-align 		: right;
+		text-shadow 	: 2px 2px 0 rgba( $dark, 0.75 );
+		text-transform	: uppercase;
+	}
+
+	.subtitle {
+		font-size 		: 38px;
+		text-align 		: right;
+		text-shadow 	: 2px 2px 0 rgba( $dark, 0.75 );
+		text-transform	: uppercase;
+	}
+}
+
+.wrap-tagline {
+	display 		: none;
+	pointer-events 	: none;
+	transition 		: transform $trans__default;
+
+	.home & {
+		top: $size__header-height + 12px + 55px;
+
+		@media only screen and (min-width: $bp__laptop) {
+			top: $size__header-height + 99px;
+		}
+
+		h1, h2 {
+			line-height : 1;
+			margin 		: 0;
+		}
+	}
+
+	.home.admin-bar & {
+		top: $size__wp-admin-bar-1 + $size__header-height + 12px + 55px;
+
+		@media only screen and (min-width: $bp__admin-bar-1) {
+			top: $size__wp-admin-bar-2 + $size__header-height + 12px + 55px;
+		}
+
+		@media only screen and (min-width: $bp__laptop) {
+			top: $size__wp-admin-bar-2 + $size__header-height + 99px;
+		}
+	}
+
+	@media only screen and (min-width: $bp__tablet) {
+		display 	: inherit;
+		left 		: 0;
+		position 	: absolute;
+		width 		: 100%;
+
+		.home .open & {
+			transform: translateY( $size__hidden-search );
+		}
+	}
 }
